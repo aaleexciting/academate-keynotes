@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batasan Masalah — Sidang Kolokium Academate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ["Poppins", "sans-serif"] },
+                    colors: {
+                        "slide-bg": "#F7F7FA",
+                        "brand-dark": "#1E1F24",
+                        "brand-primary": "#6F6CFF",
+                        "brand-secondary": "#8B7CFF",
+                        "brand-text": "#6C6F7F"
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --primary: #6F6CFF;
+            --primary-2: #8B7CFF;
+            --surface: #FFFFFF;
+            --text: #1E1F24;
+            --muted: #6C6F7F;
+            --border: #E3E4EC;
+            --blue: #4F8DF7;
+            --cyan: #34A9B9;
+            --green: #2EAD78;
+            --orange: #E98B3A;
+            --pink: #D866A7;
+        }
+
+        * { box-sizing: border-box; }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: #F7F7FA;
+            color: var(--text);
+            font-family: "Poppins", sans-serif;
+        }
+
+        .native-stage {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity .38s ease, visibility .38s ease;
+        }
+
+        .native-stage.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #app-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        #dynamic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+            background: linear-gradient(135deg, #F7F7FA 0%, #EEF2FF 100%);
+        }
+
+        .orb {
+            position: absolute;
+            z-index: 1;
+            border-radius: 50%;
+            filter: blur(90px);
+            animation: float-orb 25s infinite ease-in-out alternate;
+        }
+
+        .orb-1 {
+            width: 45vw;
+            height: 45vw;
+            top: -15%;
+            left: -10%;
+            background: rgba(111, 108, 255, .15);
+        }
+
+        .orb-2 {
+            width: 35vw;
+            height: 35vw;
+            right: -5%;
+            bottom: -10%;
+            background: rgba(106, 201, 255, .15);
+            animation-delay: -5s;
+            animation-duration: 30s;
+        }
+
+        .orb-3 {
+            width: 30vw;
+            height: 30vw;
+            top: 40%;
+            left: 45%;
+            background: rgba(139, 124, 255, .12);
+            animation-delay: -12s;
+            animation-duration: 20s;
+        }
+
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%236F6CFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.12'%3E%3Cpath d='M30 20l-12 6l12 6l12-6z'/%3E%3Cpath d='M21 27.5v6c0 0 4 4 9 4s9-4 9-4v-6'/%3E%3Cpath d='M41 24.5v7'/%3E%3Cpath d='M90 30c0 4-4 4-4 8c0-4-4-4-8-4c4 0 4-4 4-8c0 4 4 4 8 4z' fill='%236F6CFF' fill-opacity='0.12' stroke='none'/%3E%3Cpath d='M90 85c-4-1-8-1-12 1v12c4-2 8-2 12-1c4-1 8-1 12 1v-12c-4-2-8-2-12-1z'/%3E%3Cpath d='M90 85v12'/%3E%3Ccircle cx='30' cy='90' r='1.5' fill='%236F6CFF' fill-opacity='0.15' stroke='none'/%3E%3Ccircle cx='60' cy='60' r='1.5' fill='%236F6CFF' fill-opacity='0.15' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 120px 120px;
+        }
+
+        @keyframes float-orb {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(3vw, -4vh) scale(1.05); }
+            66% { transform: translate(-2vw, 3vh) scale(.95); }
+            100% { transform: translate(4vw, 2vh) scale(1.1); }
+        }
+
+        .deck-header {
+            position: relative;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            flex-shrink: 0;
+            padding: clamp(22px, 3.7vh, 40px) clamp(40px, 5vw, 64px);
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-box {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 9px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            box-shadow: 0 8px 20px rgba(111, 108, 255, .16);
+        }
+
+        .logo-box img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-fallback {
+            position: absolute;
+            inset: 0;
+            display: none;
+            place-items: center;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .brand-name,
+        .event-name {
+            margin: 0;
+            color: var(--text);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .brand-name {
+            font-size: clamp(18px, 1.6vw, 24px);
+            letter-spacing: .14em;
+        }
+
+        .event-name {
+            font-size: clamp(15px, 1.3vw, 20px);
+            letter-spacing: .08em;
+        }
+
+        #slides-container {
+            position: relative;
+            z-index: 20;
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .slide.active {
+            z-index: 20;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scope-layout {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            gap: clamp(24px, 3vh, 42px);
+            width: 100%;
+            height: 100%;
+            padding: 0 clamp(40px, 5vw, 64px);
+        }
+
+        .title-block {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) clamp(100px, 8vw, 132px);
+            grid-template-rows: auto auto;
+            align-items: center;
+            column-gap: clamp(28px, 3vw, 52px);
+            row-gap: clamp(11px, 1.2vh, 16px);
+            width: 100%;
+            min-height: clamp(122px, 15vh, 164px);
+            flex-shrink: 0;
+            min-width: 0;
+        }
+
+        .title-heading {
+            min-width: 0;
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .title-kicker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-size: clamp(12px, .84vw, 16px);
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .title-kicker::before {
+            content: "";
+            width: 38px;
+            height: 3px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+        }
+
+        .title-block h1 {
+            position: relative;
+            z-index: 2;
+            margin: 0;
+            color: var(--text);
+            font-size: clamp(40px, 3.5vw, 60px);
+            font-weight: 900;
+            letter-spacing: -.045em;
+            line-height: 1.04;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .title-block > p {
+            position: relative;
+            z-index: 2;
+            grid-column: 1;
+            grid-row: 2;
+            max-width: 1120px;
+            margin: 0;
+            color: var(--muted);
+            padding: 0;
+            border: 0;
+            font-size: clamp(14px, 1.05vw, 18px);
+            font-weight: 500;
+            line-height: 1.58;
+        }
+
+        .scope-illustration {
+            position: relative;
+            z-index: 1;
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            justify-self: end;
+            align-self: center;
+            width: clamp(96px, 8vw, 132px);
+            aspect-ratio: 1;
+            opacity: .76;
+        }
+
+        .scope-ring {
+            position: absolute;
+            inset: 12%;
+            border: 1px solid rgba(111,108,255,.22);
+            border-radius: 50%;
+            animation: ring-turn 22s linear infinite;
+        }
+
+        .scope-ring::before,
+        .scope-ring::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .scope-ring::before {
+            width: 12px;
+            height: 12px;
+            top: 12%;
+            left: 5%;
+            background: var(--primary);
+            box-shadow: 0 8px 18px rgba(111,108,255,.28);
+        }
+
+        .scope-ring::after {
+            width: 8px;
+            height: 8px;
+            right: 8%;
+            bottom: 15%;
+            background: var(--cyan);
+        }
+
+        .scope-corners {
+            position: absolute;
+            inset: 26%;
+            color: rgba(111,108,255,.11);
+            font-size: clamp(65px, 7vw, 110px);
+            line-height: 1;
+        }
+
+        .scope-corners::before,
+        .scope-corners::after {
+            content: "";
+            position: absolute;
+            width: 42%;
+            height: 42%;
+            border-color: var(--primary);
+            border-style: solid;
+            opacity: .52;
+        }
+
+        .scope-corners::before {
+            top: 0;
+            left: 0;
+            border-width: 3px 0 0 3px;
+            border-radius: 12px 0 0;
+        }
+
+        .scope-corners::after {
+            right: 0;
+            bottom: 0;
+            border-width: 0 3px 3px 0;
+            border-radius: 0 0 12px;
+        }
+
+        .scope-center {
+            position: absolute;
+            inset: 40%;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            color: #fff;
+            box-shadow: 0 15px 34px rgba(111,108,255,.25);
+            font-size: clamp(17px, 1.8vw, 29px);
+            animation: scope-pulse 3.6s ease-in-out infinite;
+        }
+
+        @keyframes ring-turn { to { transform: rotate(360deg); } }
+        @keyframes scope-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .scope-matrix {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-rows: repeat(2, minmax(0, 1fr));
+            flex: none;
+            height: clamp(380px, 54vh, 650px);
+            width: 100%;
+            min-height: 0;
+            min-width: 0;
+            margin-bottom: clamp(18px, 2.5vh, 32px);
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: rgba(255,255,255,.28);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+        }
+
+        .scope-matrix::before {
+            display: none;
+        }
+
+        .scope-item {
+            --accent: var(--primary);
+            position: relative;
+            display: grid;
+            grid-template-columns: 68px minmax(0, 1fr);
+            align-content: center;
+            gap: clamp(17px, 1.4vw, 25px);
+            min-height: 0;
+            padding: clamp(20px, 2.6vh, 30px) clamp(20px, 1.75vw, 30px);
+            background:
+                radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent), transparent 91%), transparent 42%),
+                rgba(255,255,255,.36);
+            opacity: 0;
+            transform: translateY(18px);
+            animation: item-in .62s cubic-bezier(.2,.8,.2,1) forwards;
+            transition: background .3s ease;
+        }
+
+        .scope-item:nth-child(2) { --accent: var(--blue); animation-delay: .08s; }
+        .scope-item:nth-child(3) { --accent: var(--cyan); animation-delay: .16s; }
+        .scope-item:nth-child(4) { --accent: var(--green); animation-delay: .24s; }
+        .scope-item:nth-child(5) { --accent: var(--orange); animation-delay: .32s; }
+        .scope-item:nth-child(6) { --accent: var(--pink); animation-delay: .40s; }
+
+        .scope-item:nth-child(-n+3) { border-bottom: 1px solid var(--border); }
+        .scope-item:not(:nth-child(3n)) { border-right: 1px solid var(--border); }
+
+        .scope-item:hover {
+            background:
+                radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent), transparent 85%), transparent 46%),
+                rgba(255,255,255,.56);
+        }
+
+        .scope-item::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            animation: line-grow .8s ease forwards;
+            animation-delay: inherit;
+        }
+
+        .scope-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .scope-number {
+            color: var(--accent);
+            font-size: clamp(25px, 1.72vw, 31px);
+            font-weight: 900;
+            letter-spacing: -.04em;
+            line-height: 1;
+        }
+
+        .scope-icon {
+            display: grid;
+            place-items: center;
+            width: clamp(54px, 3.4vw, 62px);
+            height: clamp(54px, 3.4vw, 62px);
+            border: 1px solid color-mix(in srgb, var(--accent), white 74%);
+            border-radius: 18px;
+            background: color-mix(in srgb, var(--accent), white 91%);
+            color: var(--accent);
+            font-size: clamp(27px, 1.8vw, 32px);
+            box-shadow: 0 12px 28px color-mix(in srgb, var(--accent), transparent 87%);
+            animation: icon-float 4.4s ease-in-out infinite;
+        }
+
+        .scope-copy {
+            align-self: center;
+            min-width: 0;
+        }
+
+        .scope-copy h2 {
+            margin: 0 0 10px;
+            color: var(--text);
+            font-size: clamp(18px, 1.22vw, 22px);
+            font-weight: 800;
+            letter-spacing: -.012em;
+            line-height: 1.28;
+        }
+
+        .scope-copy p {
+            margin: 0;
+            color: var(--muted);
+            font-size: clamp(13.5px, .93vw, 16px);
+            font-weight: 500;
+            line-height: 1.55;
+        }
+
+        @keyframes item-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes line-grow {
+            to { width: 58px; }
+        }
+
+        @keyframes icon-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .deck-footer {
+            position: relative;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+            flex-shrink: 0;
+            padding: 0 clamp(40px, 5vw, 64px) clamp(22px, 3.7vh, 40px);
+        }
+
+        .university-logo {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: clamp(58px, 4.2vw, 80px);
+            height: clamp(58px, 4.2vw, 80px);
+            flex-shrink: 0;
+        }
+
+        .university-logo img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .university-fallback {
+            position: absolute;
+            inset: 7px;
+            display: none;
+            place-items: center;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .institution-copy {
+            color: var(--text);
+            font-size: clamp(11px, .82vw, 15px);
+            font-weight: 700;
+            letter-spacing: .05em;
+            line-height: 1.34;
+            text-transform: uppercase;
+        }
+
+        .institution-copy p { margin: 0; }
+
+        .presentation-controls {
+            position: fixed;
+            right: 26px;
+            bottom: 22px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px;
+            border: 1px solid rgba(255,255,255,.92);
+            border-radius: 16px;
+            background: rgba(255,255,255,.82);
+            box-shadow: 0 14px 35px rgba(30,31,36,.13);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .deck-prev,
+        .deck-next,
+        .deck-fullscreen {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 11px;
+            background: transparent;
+            color: var(--text);
+            text-decoration: none;
+            font: 700 18px/1 "Poppins", sans-serif;
+            cursor: pointer;
+            transition: color .2s ease, background .2s ease, transform .2s ease;
+        }
+
+        .deck-prev:hover,
+        .deck-next:hover,
+        .deck-fullscreen:hover {
+            color: var(--primary);
+            background: #F1F0FF;
+            transform: translateY(-1px);
+        }
+
+        [aria-disabled="true"] {
+            opacity: .34;
+            pointer-events: none;
+        }
+
+        .presentation-progress {
+            min-width: 64px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-align: center;
+        }
+
+        .fullscreen-glyph {
+            position: relative;
+            width: 17px;
+            height: 17px;
+        }
+
+        .fullscreen-glyph::before,
+        .fullscreen-glyph::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 2px solid currentColor;
+        }
+
+        .fullscreen-glyph::before {
+            clip-path: polygon(0 0, 42% 0, 42% 12%, 12% 12%, 12% 42%, 0 42%, 0 0, 100% 0, 100% 42%, 88% 42%, 88% 12%, 58% 12%, 58% 0);
+        }
+
+        .fullscreen-glyph::after {
+            clip-path: polygon(0 58%, 12% 58%, 12% 88%, 42% 88%, 42% 100%, 0 100%, 0 58%, 100% 58%, 100% 100%, 58% 100%, 58% 88%, 88% 88%, 88% 58%);
+        }
+
+        .deck-frame {
+            position: fixed;
+            inset: 0;
+            z-index: 900;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #F7F7FA;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity .38s ease, visibility .38s ease;
+        }
+
+        .deck-frame.is-current {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        body.is-embedded .presentation-controls { display: none; }
+
+        @media (max-aspect-ratio: 16/10) and (min-width: 801px) {
+            .deck-header {
+                padding-top: 20px;
+                padding-bottom: 18px;
+            }
+
+            .deck-footer { padding-bottom: 18px; }
+
+            .scope-layout {
+                gap: clamp(22px, 2.8vh, 36px);
+            }
+
+            .title-block {
+                min-height: 112px;
+                grid-template-columns: minmax(0, 1fr) 92px;
+                column-gap: 28px;
+                row-gap: 9px;
+            }
+
+            .scope-matrix {
+                height: clamp(390px, 58vh, 740px);
+                margin-bottom: clamp(18px, 2.2vh, 28px);
+            }
+
+            .scope-item {
+                padding-top: 17px;
+                padding-bottom: 17px;
+            }
+
+            .scope-copy p {
+                font-size: clamp(13px, .88vw, 15px);
+                line-height: 1.5;
+            }
+        }
+
+        @media (max-width: 1050px) {
+            .title-block {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .scope-illustration {
+                display: none;
+            }
+
+            .scope-item {
+                grid-template-columns: 56px minmax(0,1fr);
+                padding-left: 17px;
+                padding-right: 17px;
+            }
+
+            .scope-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .presentation-controls {
+                right: 12px;
+                bottom: 10px;
+                transform: scale(.9);
+                transform-origin: right bottom;
+            }
+
+            .deck-footer { padding-right: 200px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body data-page="5">
+    <div class="native-stage">
+        <div id="dynamic-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="bg-pattern"></div>
+        </div>
+
+        <div id="app-container">
+            <header class="deck-header">
+                <div class="brand-lockup">
+                    <div class="logo-box">
+                        <img src="academate_logo.png" alt="Academate Logo Icon" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                        <span class="logo-fallback" aria-hidden="true">A</span>
+                    </div>
+                    <p class="brand-name">Academate</p>
+                </div>
+                <p class="event-name">Sidang Kolokium 2026</p>
+            </header>
+
+            <div id="slides-container">
+                <section class="slide active" id="slide-5">
+                    <main class="scope-layout">
+                        <div class="title-block">
+                            <div class="title-heading">
+                                <div class="title-kicker">Slide 05</div>
+                                <h1>Batasan Masalah</h1>
+                            </div>
+                            <p>Agar pengembangan Academate tetap fokus dan sesuai tujuan penelitian, ruang lingkup dibatasi pada hal-hal berikut:</p>
+
+                            <div class="scope-illustration" aria-hidden="true">
+                                <div class="scope-ring"></div>
+                                <div class="scope-corners"></div>
+                                <div class="scope-center"><i class="ri-focus-3-line"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="scope-matrix">
+                            <article class="scope-item">
+                                <div class="scope-marker">
+                                    <span class="scope-number">01</span>
+                                    <span class="scope-icon"><i class="ri-group-line"></i></span>
+                                </div>
+                                <div class="scope-copy">
+                                    <h2>Lingkup Pengguna</h2>
+                                    <p>Sistem ditujukan untuk mendukung kegiatan akademik mahasiswa Teknik Informatika FTI Universitas Serang Raya.</p>
+                                </div>
+                            </article>
+
+                            <article class="scope-item">
+                                <div class="scope-marker">
+                                    <span class="scope-number">02</span>
+                                    <span class="scope-icon"><i class="ri-code-box-line"></i></span>
+                                </div>
+                                <div class="scope-copy">
+                                    <h2>Teknologi yang Digunakan</h2>
+                                    <p>Academate dikembangkan sebagai Progressive Web App (PWA) menggunakan HTML, CSS, JavaScript, dan Google Firebase sebagai backend serta database.</p>
+                                </div>
+                            </article>
+
+                            <article class="scope-item">
+                                <div class="scope-marker">
+                                    <span class="scope-number">03</span>
+                                    <span class="scope-icon"><i class="ri-layout-grid-line"></i></span>
+                                </div>
+                                <div class="scope-copy">
+                                    <h2>Fitur Utama Sistem</h2>
+                                    <p>Pengembangan mencakup akun pengguna, dashboard, kelas dan diskusi, tugas, jadwal, catatan bersama, Meet, lampiran file/media, serta notifikasi Telegram.</p>
+                                </div>
+                            </article>
+
+                            <article class="scope-item">
+                                <div class="scope-marker">
+                                    <span class="scope-number">04</span>
+                                    <span class="scope-icon"><i class="ri-flow-chart"></i></span>
+                                </div>
+                                <div class="scope-copy">
+                                    <h2>Metode Pengembangan</h2>
+                                    <p>Pengembangan menggunakan metode Waterfall: analisis kebutuhan, perancangan, implementasi, dan pengujian. Tahap maintenance tidak termasuk.</p>
+                                </div>
+                            </article>
+
+                            <article class="scope-item">
+                                <div class="scope-marker">
+                                    <span class="scope-number">05</span>
+                                    <span class="scope-icon"><i class="ri-shield-check-line"></i></span>
+                                </div>
+                                <div class="scope-copy">
+                                    <h2>Pengujian Sistem</h2>
+                                    <p>Pengujian fungsi sistem menggunakan Black-box Testing bersama penguji atau pakar IT.</p>
+                                </div>
+                            </article>
+
+                            <article class="scope-item">
+                                <div class="scope-marker">
+                                    <span class="scope-number">06</span>
+                                    <span class="scope-icon"><i class="ri-database-2-line"></i></span>
+                                </div>
+                                <div class="scope-copy">
+                                    <h2>Data Penelitian</h2>
+                                    <p>Pengujian menggunakan sampel jadwal perkuliahan semester genap dari lingkungan fakultas sebagai data operasional.</p>
+                                </div>
+                            </article>
+                        </div>
+                    </main>
+                </section>
+            </div>
+
+            <footer class="deck-footer">
+                <div class="university-logo">
+                    <img src="unsera_logo.png" alt="University Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                    <span class="university-fallback" aria-hidden="true">UNSERA</span>
+                </div>
+                <div class="institution-copy">
+                    <p>Program Studi Teknik Informatika</p>
+                    <p>Fakultas Teknologi Informasi</p>
+                    <p>Universitas Serang Raya</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <nav class="presentation-controls" aria-label="Navigasi presentasi">
+        <a class="deck-prev" href="4.html" aria-label="Slide sebelumnya" aria-disabled="false">←</a>
+        <span class="presentation-progress" aria-live="polite">05 / 06</span>
+        <a class="deck-next" href="6.html" aria-label="Slide berikutnya" aria-disabled="false">→</a>
+        <button class="deck-fullscreen" type="button" aria-label="Masuk atau keluar layar penuh" title="Layar penuh (F)">
+            <span class="fullscreen-glyph" aria-hidden="true"></span>
+        </button>
+    </nav>
+
+    <script>
+        (() => {
+            const PAGE_NUMBER = 5;
+            const PAGE_FILES = ["1.html", "2.html", "3.html", "4.html", "5.html", "6.html"];
+            const TOTAL_PAGES = PAGE_FILES.length;
+            const embedded = window.self !== window.top;
+            document.body.classList.toggle("is-embedded", embedded);
+
+            if (embedded) {
+                document.addEventListener("keydown", (event) => {
+                    if (["ArrowRight", "ArrowDown", " ", "PageDown"].includes(event.key)) {
+                        event.preventDefault();
+                        window.top.postMessage({
+                            type: "academate:navigate",
+                            page: Math.min(TOTAL_PAGES, PAGE_NUMBER + 1)
+                        }, "*");
+                    } else if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
+                        event.preventDefault();
+                        window.top.postMessage({
+                            type: "academate:navigate",
+                            page: Math.max(1, PAGE_NUMBER - 1)
+                        }, "*");
+                    } else if (event.key.toLowerCase() === "f") {
+                        window.top.postMessage({ type: "academate:fullscreen" }, "*");
+                    }
+                });
+                window.top.postMessage({ type: "academate:ready", page: PAGE_NUMBER }, "*");
+                return;
+            }
+
+            const nativeStage = document.querySelector(".native-stage");
+            const progress = document.querySelector(".presentation-progress");
+            const previousButton = document.querySelector(".deck-prev");
+            const nextButton = document.querySelector(".deck-next");
+            const fullscreenButton = document.querySelector(".deck-fullscreen");
+            const frames = new Map();
+            let currentPage = PAGE_NUMBER;
+            let pendingPage = null;
+
+            PAGE_FILES.forEach((file, index) => {
+                const pageNumber = index + 1;
+                if (pageNumber === PAGE_NUMBER) return;
+
+                const frame = document.createElement("iframe");
+                frame.className = "deck-frame";
+                frame.dataset.page = String(pageNumber);
+                frame.title = `Slide ${pageNumber} dari ${TOTAL_PAGES}`;
+                frame.src = `${file}?embedded=1`;
+                frame.setAttribute("aria-hidden", "true");
+                frame.addEventListener("load", () => {
+                    frame.dataset.ready = "true";
+                    if (pendingPage === pageNumber) switchTo(pageNumber);
+                }, { once: true });
+                document.body.appendChild(frame);
+                frames.set(pageNumber, frame);
+            });
+
+            function updateControls() {
+                progress.textContent = `${String(currentPage).padStart(2, "0")} / ${String(TOTAL_PAGES).padStart(2, "0")}`;
+                previousButton.href = PAGE_FILES[Math.max(0, currentPage - 2)];
+                nextButton.href = PAGE_FILES[Math.min(TOTAL_PAGES - 1, currentPage)];
+                previousButton.setAttribute("aria-disabled", String(currentPage === 1));
+                nextButton.setAttribute("aria-disabled", String(currentPage === TOTAL_PAGES));
+            }
+
+            function switchTo(pageNumber) {
+                if (pageNumber < 1 || pageNumber > TOTAL_PAGES || pageNumber === currentPage) return;
+
+                const targetFrame = pageNumber === PAGE_NUMBER ? null : frames.get(pageNumber);
+                if (targetFrame && targetFrame.dataset.ready !== "true") {
+                    pendingPage = pageNumber;
+                    return;
+                }
+                pendingPage = null;
+
+                nativeStage.classList.toggle("is-hidden", pageNumber !== PAGE_NUMBER);
+                frames.forEach((frame, number) => {
+                    const active = number === pageNumber;
+                    frame.classList.toggle("is-current", active);
+                    frame.setAttribute("aria-hidden", String(!active));
+                });
+
+                currentPage = pageNumber;
+                updateControls();
+                window.history.replaceState({ page: currentPage }, "", `#slide-${currentPage}`);
+            }
+
+            function toggleFullscreen() {
+                const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+                if (fullscreenElement) {
+                    const exit = document.exitFullscreen || document.webkitExitFullscreen;
+                    if (exit) exit.call(document);
+                    return;
+                }
+
+                const root = document.documentElement;
+                const request = root.requestFullscreen || root.webkitRequestFullscreen;
+                if (request) request.call(root);
+            }
+
+            function navigateFromAnchor(event, delta) {
+                event.preventDefault();
+                switchTo(currentPage + delta);
+            }
+
+            previousButton.addEventListener("click", (event) => navigateFromAnchor(event, -1));
+            nextButton.addEventListener("click", (event) => navigateFromAnchor(event, 1));
+            fullscreenButton.addEventListener("click", toggleFullscreen);
+
+            document.addEventListener("keydown", (event) => {
+                if (["ArrowRight", "ArrowDown", " ", "PageDown"].includes(event.key)) {
+                    event.preventDefault();
+                    switchTo(currentPage + 1);
+                } else if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
+                    event.preventDefault();
+                    switchTo(currentPage - 1);
+                } else if (event.key.toLowerCase() === "f") {
+                    event.preventDefault();
+                    toggleFullscreen();
+                }
+            });
+
+            window.addEventListener("message", (event) => {
+                if (!event.data || typeof event.data !== "object") return;
+                if (event.data.type === "academate:navigate") switchTo(Number(event.data.page));
+                if (event.data.type === "academate:fullscreen") toggleFullscreen();
+            });
+
+            window.addEventListener("popstate", (event) => {
+                if (event.state && event.state.page) switchTo(Number(event.state.page));
+            });
+
+            updateControls();
+        })();
+    </script>
+</body>
+</html>

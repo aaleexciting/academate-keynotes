@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tujuan Penelitian — Sidang Kolokium Academate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ["Poppins", "sans-serif"] },
+                    colors: {
+                        "slide-bg": "#F7F7FA",
+                        "brand-dark": "#1E1F24",
+                        "brand-primary": "#6F6CFF",
+                        "brand-secondary": "#8B7CFF",
+                        "brand-text": "#6C6F7F"
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --primary: #6F6CFF;
+            --primary-2: #8B7CFF;
+            --surface: #FFFFFF;
+            --text: #1E1F24;
+            --muted: #6C6F7F;
+            --border: #E3E4EC;
+            --blue: #4F8DF7;
+            --cyan: #34A9B9;
+            --green: #2EAD78;
+            --orange: #E98B3A;
+        }
+
+        * { box-sizing: border-box; }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: #F7F7FA;
+            color: var(--text);
+            font-family: "Poppins", sans-serif;
+        }
+
+        .native-stage {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity .38s ease, visibility .38s ease;
+        }
+
+        .native-stage.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #app-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        #dynamic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+            background: linear-gradient(135deg, #F7F7FA 0%, #EEF2FF 100%);
+        }
+
+        .orb {
+            position: absolute;
+            z-index: 1;
+            border-radius: 50%;
+            filter: blur(90px);
+            animation: float-orb 25s infinite ease-in-out alternate;
+        }
+
+        .orb-1 {
+            width: 45vw;
+            height: 45vw;
+            top: -15%;
+            left: -10%;
+            background: rgba(111, 108, 255, .15);
+        }
+
+        .orb-2 {
+            width: 35vw;
+            height: 35vw;
+            right: -5%;
+            bottom: -10%;
+            background: rgba(106, 201, 255, .15);
+            animation-delay: -5s;
+            animation-duration: 30s;
+        }
+
+        .orb-3 {
+            width: 30vw;
+            height: 30vw;
+            top: 40%;
+            left: 45%;
+            background: rgba(139, 124, 255, .12);
+            animation-delay: -12s;
+            animation-duration: 20s;
+        }
+
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%236F6CFF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.12'%3E%3Cpath d='M30 20l-12 6l12 6l12-6z'/%3E%3Cpath d='M21 27.5v6c0 0 4 4 9 4s9-4 9-4v-6'/%3E%3Cpath d='M41 24.5v7'/%3E%3Cpath d='M90 30c0 4-4 4-4 8c0-4-4-4-8-4c4 0 4-4 4-8c0 4 4 4 8 4z' fill='%236F6CFF' fill-opacity='0.12' stroke='none'/%3E%3Cpath d='M90 85c-4-1-8-1-12 1v12c4-2 8-2 12-1c4-1 8-1 12 1v-12c-4-2-8-2-12-1z'/%3E%3Cpath d='M90 85v12'/%3E%3Ccircle cx='30' cy='90' r='1.5' fill='%236F6CFF' fill-opacity='0.15' stroke='none'/%3E%3Ccircle cx='60' cy='60' r='1.5' fill='%236F6CFF' fill-opacity='0.15' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 120px 120px;
+        }
+
+        @keyframes float-orb {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(3vw, -4vh) scale(1.05); }
+            66% { transform: translate(-2vw, 3vh) scale(.95); }
+            100% { transform: translate(4vw, 2vh) scale(1.1); }
+        }
+
+        .deck-header {
+            position: relative;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            flex-shrink: 0;
+            padding: clamp(22px, 3.7vh, 40px) clamp(40px, 5vw, 64px);
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-box {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 9px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            box-shadow: 0 8px 20px rgba(111, 108, 255, .16);
+        }
+
+        .logo-box img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-fallback {
+            position: absolute;
+            inset: 0;
+            display: none;
+            place-items: center;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .brand-name,
+        .event-name {
+            margin: 0;
+            color: var(--text);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .brand-name {
+            font-size: clamp(18px, 1.6vw, 24px);
+            letter-spacing: .14em;
+        }
+
+        .event-name {
+            font-size: clamp(15px, 1.3vw, 20px);
+            letter-spacing: .08em;
+        }
+
+        #slides-container {
+            position: relative;
+            z-index: 20;
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .slide.active {
+            z-index: 20;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .objectives-layout {
+            display: grid;
+            grid-template-columns: minmax(300px, .73fr) minmax(710px, 1.7fr);
+            align-items: center;
+            gap: clamp(44px, 4.8vw, 82px);
+            width: 100%;
+            height: 100%;
+            padding: 0 clamp(40px, 5vw, 64px);
+        }
+
+        .title-block {
+            position: relative;
+            align-self: stretch;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        .title-kicker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 17px;
+            color: var(--primary);
+            font-size: clamp(12px, .84vw, 16px);
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .title-kicker::before {
+            content: "";
+            width: 38px;
+            height: 3px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-2));
+        }
+
+        .title-block h1 {
+            position: relative;
+            z-index: 2;
+            max-width: 520px;
+            margin: 0;
+            color: var(--text);
+            font-size: clamp(43px, 4vw, 68px);
+            font-weight: 900;
+            letter-spacing: -.045em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .goal-illustration {
+            position: absolute;
+            z-index: 0;
+            right: 0;
+            bottom: 4%;
+            width: clamp(190px, 17vw, 290px);
+            aspect-ratio: 1;
+            opacity: .76;
+        }
+
+        .goal-orbit {
+            position: absolute;
+            inset: 8%;
+            border: 1px solid rgba(111,108,255,.23);
+            border-radius: 50%;
+            animation: goal-spin 20s linear infinite;
+        }
+
+        .goal-orbit::before,
+        .goal-orbit::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .goal-orbit::before {
+            width: 12px;
+            height: 12px;
+            left: 7%;
+            top: 20%;
+            box-shadow: 0 8px 18px rgba(111,108,255,.28);
+        }
+
+        .goal-orbit::after {
+            width: 8px;
+            height: 8px;
+            right: 11%;
+            bottom: 16%;
+            background: var(--cyan);
+        }
+
+        .target-ring {
+            position: absolute;
+            inset: 24%;
+            display: grid;
+            place-items: center;
+            border: 2px solid rgba(111,108,255,.2);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 22px rgba(111,108,255,.055),
+                0 0 0 44px rgba(111,108,255,.028);
+            color: var(--primary);
+            font-size: clamp(42px, 4.6vw, 76px);
+            animation: goal-pulse 3.8s ease-in-out infinite;
+        }
+
+        @keyframes goal-spin { to { transform: rotate(360deg); } }
+        @keyframes goal-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        .objective-stack {
+            position: relative;
+            width: 100%;
+            min-width: 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: rgba(255,255,255,.24);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+        }
+
+        .objective-row {
+            --accent: var(--primary);
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(330px, 1.1fr) minmax(330px, .9fr);
+            align-items: center;
+            gap: clamp(22px, 2.4vw, 42px);
+            min-height: clamp(245px, 29vh, 310px);
+            padding: clamp(20px, 2.5vh, 31px) clamp(22px, 2.3vw, 38px);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: objective-in .72s cubic-bezier(.2,.8,.2,1) forwards;
+        }
+
+        .objective-row + .objective-row {
+            --accent: var(--cyan);
+            border-top: 1px solid var(--border);
+            animation-delay: .18s;
+        }
+
+        .objective-row::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            animation: accent-grow .9s ease forwards .25s;
+        }
+
+        .objective-copy {
+            position: relative;
+            z-index: 3;
+            min-width: 0;
+        }
+
+        .objective-label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+
+        .objective-number {
+            color: var(--accent);
+            font-size: clamp(23px, 1.8vw, 32px);
+            font-weight: 900;
+            letter-spacing: -.05em;
+        }
+
+        .objective-label::after {
+            content: "";
+            width: 46px;
+            height: 2px;
+            border-radius: 999px;
+            background: var(--accent);
+            opacity: .42;
+        }
+
+        .objective-copy h2 {
+            max-width: 650px;
+            margin: 0 0 10px;
+            color: var(--text);
+            font-size: clamp(18px, 1.35vw, 24px);
+            font-weight: 800;
+            letter-spacing: -.022em;
+            line-height: 1.3;
+        }
+
+        .objective-copy p {
+            max-width: 720px;
+            margin: 0;
+            color: var(--muted);
+            font-size: clamp(12.5px, .89vw, 15.5px);
+            font-weight: 500;
+            line-height: 1.62;
+        }
+
+        @keyframes objective-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes accent-grow {
+            to { width: 150px; }
+        }
+
+        .waterfall-visual {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+            min-height: 190px;
+            padding: 9px 2px;
+        }
+
+        .waterfall-visual::before {
+            content: "";
+            position: absolute;
+            left: 27px;
+            top: 25px;
+            bottom: 25px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), rgba(111,108,255,.12));
+        }
+
+        .wf-step {
+            --step-color: var(--primary);
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: calc(100% - var(--indent));
+            min-width: 220px;
+            margin-left: var(--indent);
+            padding: 9px 13px;
+            border: 1px solid color-mix(in srgb, var(--step-color), white 75%);
+            border-radius: 13px;
+            background: rgba(255,255,255,.82);
+            box-shadow: 0 10px 24px rgba(30,31,36,.055);
+            opacity: 0;
+            transform: translateX(-16px);
+            animation: wf-in .5s cubic-bezier(.2,.8,.2,1) forwards;
+        }
+
+        .wf-step:nth-child(1) { --indent: 0px; animation-delay: .18s; }
+        .wf-step:nth-child(2) { --indent: 20px; --step-color: var(--blue); animation-delay: .30s; }
+        .wf-step:nth-child(3) { --indent: 40px; --step-color: var(--cyan); animation-delay: .42s; }
+        .wf-step:nth-child(4) { --indent: 60px; --step-color: var(--green); animation-delay: .54s; }
+
+        .wf-icon {
+            display: grid;
+            place-items: center;
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: color-mix(in srgb, var(--step-color), white 89%);
+            color: var(--step-color);
+            font-size: 17px;
+        }
+
+        .wf-step strong {
+            color: var(--text);
+            font-size: clamp(10.5px, .72vw, 13px);
+            font-weight: 800;
+        }
+
+        .wf-check {
+            display: grid;
+            place-items: center;
+            width: 22px;
+            height: 22px;
+            margin-left: auto;
+            border-radius: 50%;
+            background: color-mix(in srgb, var(--step-color), white 88%);
+            color: var(--step-color);
+            font-size: 13px;
+        }
+
+        @keyframes wf-in {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .ecosystem-visual {
+            position: relative;
+            min-height: 215px;
+        }
+
+        .eco-ring {
+            position: absolute;
+            width: 176px;
+            height: 176px;
+            left: 50%;
+            top: 50%;
+            border: 1px dashed rgba(52,169,185,.30);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: eco-spin 24s linear infinite;
+        }
+
+        .eco-ring::after {
+            content: "";
+            position: absolute;
+            inset: 28px;
+            border: 1px solid rgba(111,108,255,.13);
+            border-radius: 50%;
+        }
+
+        .eco-hub {
+            position: absolute;
+            z-index: 4;
+            left: 50%;
+            top: 50%;
+            display: grid;
+            place-items: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            color: #fff;
+            box-shadow: 0 20px 42px rgba(111,108,255,.28);
+            transform: translate(-50%, -50%);
+            font-size: 34px;
+        }
+
+        .eco-hub::before {
+            content: "";
+            position: absolute;
+            inset: -9px;
+            border: 1px solid rgba(111,108,255,.28);
+            border-radius: 29px;
+            animation: hub-ripple 2.8s ease-out infinite;
+        }
+
+        .eco-node {
+            position: absolute;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 10px;
+            border: 1px solid rgba(227,228,236,.9);
+            border-radius: 12px;
+            background: rgba(255,255,255,.9);
+            box-shadow: 0 10px 24px rgba(30,31,36,.07);
+            color: var(--text);
+            font-size: clamp(9px, .6vw, 11px);
+            font-weight: 800;
+            opacity: 0;
+            animation: node-in .55s cubic-bezier(.2,.8,.2,1) forwards, node-float 4.6s ease-in-out infinite;
+        }
+
+        .eco-node i {
+            color: var(--cyan);
+            font-size: 15px;
+        }
+
+        .node-1 { left: 0; top: 8%; animation-delay: .35s, 1s; }
+        .node-2 { right: 0; top: 8%; animation-delay: .43s, .4s; }
+        .node-3 { left: -4%; top: 43%; animation-delay: .51s, .8s; }
+        .node-4 { right: -3%; top: 43%; animation-delay: .59s, 1.2s; }
+        .node-5 { left: 6%; bottom: 5%; animation-delay: .67s, .2s; }
+        .node-6 { right: 4%; bottom: 5%; animation-delay: .75s, .9s; }
+
+        @keyframes eco-spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes hub-ripple {
+            0% { opacity: .8; transform: scale(.92); }
+            100% { opacity: 0; transform: scale(1.32); }
+        }
+
+        @keyframes node-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes node-float {
+            0%, 100% { margin-top: 0; }
+            50% { margin-top: -4px; }
+        }
+
+        .deck-footer {
+            position: relative;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+            flex-shrink: 0;
+            padding: 0 clamp(40px, 5vw, 64px) clamp(22px, 3.7vh, 40px);
+        }
+
+        .university-logo {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: clamp(58px, 4.2vw, 80px);
+            height: clamp(58px, 4.2vw, 80px);
+            flex-shrink: 0;
+        }
+
+        .university-logo img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .university-fallback {
+            position: absolute;
+            inset: 7px;
+            display: none;
+            place-items: center;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .institution-copy {
+            color: var(--text);
+            font-size: clamp(11px, .82vw, 15px);
+            font-weight: 700;
+            letter-spacing: .05em;
+            line-height: 1.34;
+            text-transform: uppercase;
+        }
+
+        .institution-copy p { margin: 0; }
+
+        .presentation-controls {
+            position: fixed;
+            right: 26px;
+            bottom: 22px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px;
+            border: 1px solid rgba(255,255,255,.92);
+            border-radius: 16px;
+            background: rgba(255,255,255,.82);
+            box-shadow: 0 14px 35px rgba(30,31,36,.13);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .deck-prev,
+        .deck-next,
+        .deck-fullscreen {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 11px;
+            background: transparent;
+            color: var(--text);
+            text-decoration: none;
+            font: 700 18px/1 "Poppins", sans-serif;
+            cursor: pointer;
+            transition: color .2s ease, background .2s ease, transform .2s ease;
+        }
+
+        .deck-prev:hover,
+        .deck-next:hover,
+        .deck-fullscreen:hover {
+            color: var(--primary);
+            background: #F1F0FF;
+            transform: translateY(-1px);
+        }
+
+        [aria-disabled="true"] {
+            opacity: .34;
+            pointer-events: none;
+        }
+
+        .presentation-progress {
+            min-width: 64px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-align: center;
+        }
+
+        .fullscreen-glyph {
+            position: relative;
+            width: 17px;
+            height: 17px;
+        }
+
+        .fullscreen-glyph::before,
+        .fullscreen-glyph::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 2px solid currentColor;
+        }
+
+        .fullscreen-glyph::before {
+            clip-path: polygon(0 0, 42% 0, 42% 12%, 12% 12%, 12% 42%, 0 42%, 0 0, 100% 0, 100% 42%, 88% 42%, 88% 12%, 58% 12%, 58% 0);
+        }
+
+        .fullscreen-glyph::after {
+            clip-path: polygon(0 58%, 12% 58%, 12% 88%, 42% 88%, 42% 100%, 0 100%, 0 58%, 100% 58%, 100% 100%, 58% 100%, 58% 88%, 88% 88%, 88% 58%);
+        }
+
+        .deck-frame {
+            position: fixed;
+            inset: 0;
+            z-index: 900;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #F7F7FA;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity .38s ease, visibility .38s ease;
+        }
+
+        .deck-frame.is-current {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        body.is-embedded .presentation-controls { display: none; }
+
+        @media (max-aspect-ratio: 16/10) and (min-width: 801px) {
+            .deck-header {
+                padding-top: 20px;
+                padding-bottom: 18px;
+            }
+
+            .deck-footer { padding-bottom: 18px; }
+
+            .objectives-layout {
+                grid-template-columns: minmax(270px, .7fr) minmax(670px, 1.72fr);
+                gap: 38px;
+            }
+
+            .objective-row {
+                min-height: 230px;
+                padding-top: 18px;
+                padding-bottom: 18px;
+            }
+
+            .objective-copy p {
+                font-size: clamp(11.5px, .83vw, 14px);
+                line-height: 1.52;
+            }
+
+            .waterfall-visual { min-height: 170px; }
+            .ecosystem-visual { min-height: 190px; }
+        }
+
+        @media (max-width: 1050px) {
+            .objectives-layout {
+                grid-template-columns: 29% 71%;
+                gap: 24px;
+            }
+
+            .objective-row {
+                grid-template-columns: 57% 43%;
+                gap: 16px;
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .eco-node {
+                padding: 6px 7px;
+                font-size: 8.5px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .presentation-controls {
+                right: 12px;
+                bottom: 10px;
+                transform: scale(.9);
+                transform-origin: right bottom;
+            }
+
+            .deck-footer { padding-right: 200px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body data-page="6">
+    <div class="native-stage">
+        <div id="dynamic-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="bg-pattern"></div>
+        </div>
+
+        <div id="app-container">
+            <header class="deck-header">
+                <div class="brand-lockup">
+                    <div class="logo-box">
+                        <img src="academate_logo.png" alt="Academate Logo Icon" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                        <span class="logo-fallback" aria-hidden="true">A</span>
+                    </div>
+                    <p class="brand-name">Academate</p>
+                </div>
+                <p class="event-name">Sidang Kolokium 2026</p>
+            </header>
+
+            <div id="slides-container">
+                <section class="slide active" id="slide-6">
+                    <main class="objectives-layout">
+                        <div class="title-block">
+                            <div class="title-kicker">Slide 06</div>
+                            <h1>Tujuan<br>Penelitian</h1>
+
+                            <div class="goal-illustration" aria-hidden="true">
+                                <div class="goal-orbit"></div>
+                                <div class="target-ring"><i class="ri-focus-3-line"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="objective-stack">
+                            <article class="objective-row">
+                                <div class="objective-copy">
+                                    <div class="objective-label">
+                                        <span class="objective-number">01</span>
+                                    </div>
+                                    <h2>Mengembangkan Sistem Secara Terstruktur</h2>
+                                    <p>Menerapkan metode Waterfall dalam pengembangan Academate, mulai dari analisis kebutuhan, perancangan sistem, implementasi, hingga pengujian.</p>
+                                </div>
+
+                                <div class="waterfall-visual" aria-label="Tahapan metode Waterfall">
+                                    <div class="wf-step">
+                                        <span class="wf-icon"><i class="ri-search-eye-line"></i></span>
+                                        <strong>Analisis Kebutuhan</strong>
+                                        <span class="wf-check"><i class="ri-check-line"></i></span>
+                                    </div>
+                                    <div class="wf-step">
+                                        <span class="wf-icon"><i class="ri-draft-line"></i></span>
+                                        <strong>Perancangan Sistem</strong>
+                                        <span class="wf-check"><i class="ri-check-line"></i></span>
+                                    </div>
+                                    <div class="wf-step">
+                                        <span class="wf-icon"><i class="ri-code-box-line"></i></span>
+                                        <strong>Implementasi</strong>
+                                        <span class="wf-check"><i class="ri-check-line"></i></span>
+                                    </div>
+                                    <div class="wf-step">
+                                        <span class="wf-icon"><i class="ri-shield-check-line"></i></span>
+                                        <strong>Pengujian</strong>
+                                        <span class="wf-check"><i class="ri-check-line"></i></span>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="objective-row">
+                                <div class="objective-copy">
+                                    <div class="objective-label">
+                                        <span class="objective-number">02</span>
+                                    </div>
+                                    <h2>Menghasilkan Platform Pendukung Akademik yang Fungsional</h2>
+                                    <p>Mengembangkan Academate sebagai platform classroom berbasis web yang membantu mahasiswa mengelola tugas, jadwal, dan catatan, sekaligus menyediakan ruang untuk diskusi, berbagi informasi, dan kolaborasi kelas dalam satu sistem yang terpusat dan mudah diakses.</p>
+                                </div>
+
+                                <div class="ecosystem-visual" aria-label="Ekosistem terpusat Academate">
+                                    <div class="eco-ring"></div>
+                                    <div class="eco-hub"><i class="ri-graduation-cap-fill"></i></div>
+                                    <span class="eco-node node-1"><i class="ri-task-line"></i> Tugas</span>
+                                    <span class="eco-node node-2"><i class="ri-calendar-check-line"></i> Jadwal</span>
+                                    <span class="eco-node node-3"><i class="ri-file-edit-line"></i> Catatan</span>
+                                    <span class="eco-node node-4"><i class="ri-chat-3-line"></i> Diskusi</span>
+                                    <span class="eco-node node-5"><i class="ri-information-line"></i> Informasi</span>
+                                    <span class="eco-node node-6"><i class="ri-team-line"></i> Kolaborasi</span>
+                                </div>
+                            </article>
+                        </div>
+                    </main>
+                </section>
+            </div>
+
+            <footer class="deck-footer">
+                <div class="university-logo">
+                    <img src="unsera_logo.png" alt="University Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                    <span class="university-fallback" aria-hidden="true">UNSERA</span>
+                </div>
+                <div class="institution-copy">
+                    <p>Program Studi Teknik Informatika</p>
+                    <p>Fakultas Teknologi Informasi</p>
+                    <p>Universitas Serang Raya</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <nav class="presentation-controls" aria-label="Navigasi presentasi">
+        <a class="deck-prev" href="5.html" aria-label="Slide sebelumnya" aria-disabled="false">←</a>
+        <span class="presentation-progress" aria-live="polite">06 / 06</span>
+        <a class="deck-next" href="6.html" aria-label="Slide berikutnya" aria-disabled="true">→</a>
+        <button class="deck-fullscreen" type="button" aria-label="Masuk atau keluar layar penuh" title="Layar penuh (F)">
+            <span class="fullscreen-glyph" aria-hidden="true"></span>
+        </button>
+    </nav>
+
+    <script>
+        (() => {
+            const PAGE_NUMBER = 6;
+            const PAGE_FILES = ["1.html", "2.html", "3.html", "4.html", "5.html", "6.html"];
+            const TOTAL_PAGES = PAGE_FILES.length;
+            const embedded = window.self !== window.top;
+            document.body.classList.toggle("is-embedded", embedded);
+
+            if (embedded) {
+                document.addEventListener("keydown", (event) => {
+                    if (["ArrowRight", "ArrowDown", " ", "PageDown"].includes(event.key)) {
+                        event.preventDefault();
+                        window.top.postMessage({
+                            type: "academate:navigate",
+                            page: Math.min(TOTAL_PAGES, PAGE_NUMBER + 1)
+                        }, "*");
+                    } else if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
+                        event.preventDefault();
+                        window.top.postMessage({
+                            type: "academate:navigate",
+                            page: Math.max(1, PAGE_NUMBER - 1)
+                        }, "*");
+                    } else if (event.key.toLowerCase() === "f") {
+                        window.top.postMessage({ type: "academate:fullscreen" }, "*");
+                    }
+                });
+                window.top.postMessage({ type: "academate:ready", page: PAGE_NUMBER }, "*");
+                return;
+            }
+
+            const nativeStage = document.querySelector(".native-stage");
+            const progress = document.querySelector(".presentation-progress");
+            const previousButton = document.querySelector(".deck-prev");
+            const nextButton = document.querySelector(".deck-next");
+            const fullscreenButton = document.querySelector(".deck-fullscreen");
+            const frames = new Map();
+            let currentPage = PAGE_NUMBER;
+            let pendingPage = null;
+
+            PAGE_FILES.forEach((file, index) => {
+                const pageNumber = index + 1;
+                if (pageNumber === PAGE_NUMBER) return;
+
+                const frame = document.createElement("iframe");
+                frame.className = "deck-frame";
+                frame.dataset.page = String(pageNumber);
+                frame.title = `Slide ${pageNumber} dari ${TOTAL_PAGES}`;
+                frame.src = `${file}?embedded=1`;
+                frame.setAttribute("aria-hidden", "true");
+                frame.addEventListener("load", () => {
+                    frame.dataset.ready = "true";
+                    if (pendingPage === pageNumber) switchTo(pageNumber);
+                }, { once: true });
+                document.body.appendChild(frame);
+                frames.set(pageNumber, frame);
+            });
+
+            function updateControls() {
+                progress.textContent = `${String(currentPage).padStart(2, "0")} / ${String(TOTAL_PAGES).padStart(2, "0")}`;
+                previousButton.href = PAGE_FILES[Math.max(0, currentPage - 2)];
+                nextButton.href = PAGE_FILES[Math.min(TOTAL_PAGES - 1, currentPage)];
+                previousButton.setAttribute("aria-disabled", String(currentPage === 1));
+                nextButton.setAttribute("aria-disabled", String(currentPage === TOTAL_PAGES));
+            }
+
+            function switchTo(pageNumber) {
+                if (pageNumber < 1 || pageNumber > TOTAL_PAGES || pageNumber === currentPage) return;
+
+                const targetFrame = pageNumber === PAGE_NUMBER ? null : frames.get(pageNumber);
+                if (targetFrame && targetFrame.dataset.ready !== "true") {
+                    pendingPage = pageNumber;
+                    return;
+                }
+                pendingPage = null;
+
+                nativeStage.classList.toggle("is-hidden", pageNumber !== PAGE_NUMBER);
+                frames.forEach((frame, number) => {
+                    const active = number === pageNumber;
+                    frame.classList.toggle("is-current", active);
+                    frame.setAttribute("aria-hidden", String(!active));
+                });
+
+                currentPage = pageNumber;
+                updateControls();
+                window.history.replaceState({ page: currentPage }, "", `#slide-${currentPage}`);
+            }
+
+            function toggleFullscreen() {
+                const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+                if (fullscreenElement) {
+                    const exit = document.exitFullscreen || document.webkitExitFullscreen;
+                    if (exit) exit.call(document);
+                    return;
+                }
+
+                const root = document.documentElement;
+                const request = root.requestFullscreen || root.webkitRequestFullscreen;
+                if (request) request.call(root);
+            }
+
+            function navigateFromAnchor(event, delta) {
+                event.preventDefault();
+                switchTo(currentPage + delta);
+            }
+
+            previousButton.addEventListener("click", (event) => navigateFromAnchor(event, -1));
+            nextButton.addEventListener("click", (event) => navigateFromAnchor(event, 1));
+            fullscreenButton.addEventListener("click", toggleFullscreen);
+
+            document.addEventListener("keydown", (event) => {
+                if (["ArrowRight", "ArrowDown", " ", "PageDown"].includes(event.key)) {
+                    event.preventDefault();
+                    switchTo(currentPage + 1);
+                } else if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) {
+                    event.preventDefault();
+                    switchTo(currentPage - 1);
+                } else if (event.key.toLowerCase() === "f") {
+                    event.preventDefault();
+                    toggleFullscreen();
+                }
+            });
+
+            window.addEventListener("message", (event) => {
+                if (!event.data || typeof event.data !== "object") return;
+                if (event.data.type === "academate:navigate") switchTo(Number(event.data.page));
+                if (event.data.type === "academate:fullscreen") toggleFullscreen();
+            });
+
+            window.addEventListener("popstate", (event) => {
+                if (event.state && event.state.page) switchTo(Number(event.state.page));
+            });
+
+            updateControls();
+        })();
+    </script>
+</body>
+</html>
