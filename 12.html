@@ -188,12 +188,12 @@
     </main>
     <footer class="bottom"><div class="foot-left"><div class="unsera"><img src="unsera_logo.png" alt="Logo Universitas Serang Raya" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="unsera-fallback" style="display:none">UNSERA</span></div><div class="institution"><p>Program Studi Teknik Informatika</p><p>Fakultas Teknologi Informasi</p><p>Universitas Serang Raya</p></div></div></footer>
   </div>
-  <nav class="controls" aria-label="Navigasi presentasi"><a class="deck-prev" href="11.html" aria-label="Slide sebelumnya">←</a><span class="progress">12 / 12</span><a class="deck-next" href="12.html" aria-label="Slide berikutnya" aria-disabled="true">→</a><button class="deck-fullscreen" type="button" aria-label="Masuk atau keluar layar penuh" title="Layar penuh (F)"><i class="ri-fullscreen-line"></i></button></nav>
+  <nav class="controls" aria-label="Navigasi presentasi"><a class="deck-prev" href="11.html" aria-label="Slide sebelumnya">←</a><span class="progress">12 / 13</span><a class="deck-next" href="13.html" aria-label="Slide berikutnya" aria-disabled="false">→</a><button class="deck-fullscreen" type="button" aria-label="Masuk atau keluar layar penuh" title="Layar penuh (F)"><i class="ri-fullscreen-line"></i></button></nav>
 
   <script>
   (() => {
     const PAGE_NUMBER=12;
-    const PAGE_FILES=["1.html","2.html","3.html","4.html","5.html","6.html","7.html","8.html","9.html","10.html","11.html","12.html"];
+    const PAGE_FILES=["1.html","2.html","3.html","4.html","5.html","6.html","7.html","8.html","9.html","10.html","11.html","12.html","13.html"];
     const TOTAL_PAGES=PAGE_FILES.length;
     const embedded=window.self!==window.top;
     const stage=document.querySelector('.preview-stage');
@@ -251,7 +251,7 @@
     function navigateTo(page){embedded?window.top.postMessage({type:'academate:navigate',page},'*'):switchTo(page)}
 
     tourPrev.addEventListener('click',()=>changeStep(-1));tourNext.addEventListener('click',()=>changeStep(1));
-    deckPrev.addEventListener('click',event=>{event.preventDefault();navigateTo(11)});deckNext.addEventListener('click',event=>event.preventDefault());fsButton.addEventListener('click',toggleFullscreen);
+    deckPrev.addEventListener('click',event=>{event.preventDefault();navigateTo(11)});deckNext.addEventListener('click',event=>{event.preventDefault();navigateTo(13)});fsButton.addEventListener('click',toggleFullscreen);
     document.querySelectorAll('.app-nav a').forEach(link=>link.addEventListener('click',event=>event.preventDefault()));
     document.querySelectorAll('.share-btn').forEach(button=>button.addEventListener('click',()=>{currentStep=3;renderStep()}));
     document.getElementById('create-trigger').addEventListener('click',()=>{currentStep=4;renderStep()});document.getElementById('join-trigger').addEventListener('click',()=>{currentStep=5;renderStep()});
