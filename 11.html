@@ -86,14 +86,15 @@
     .class-card:nth-child(3n+2) .class-cover{background:linear-gradient(135deg,#E5F8F1,#E6F1FF);color:#2EAD78}
     .class-card:nth-child(3n) .class-cover{background:linear-gradient(135deg,#FFF2E5,#FFFBE7);color:#E98B3A}
     .class-card h3{margin:10px 0 2px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.class-card p{margin:0;color:var(--muted);font-size:8px}
-    .class-meta{display:flex;align-items:center;justify-content:space-between;margin-top:10px}.avatars{display:flex}.avatars span{display:grid;place-items:center;width:22px;height:22px;margin-left:-5px;border:2px solid #fff;border-radius:50%;background:#EAE6FF;color:#675FD9;font-size:7px;font-weight:800}.avatars span:first-child{margin-left:0}.class-enter{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#F1F0FF;color:var(--primary);font-size:13px}
+    .class-meta{display:flex;align-items:center;justify-content:space-between;margin-top:10px}.avatars{display:flex;align-items:center}.avatars img,.avatars span{display:grid;place-items:center;width:22px;height:22px;margin-left:-5px;border:2px solid #fff;border-radius:50%;object-fit:cover;background:#EAE6FF;color:#675FD9;font-size:6.5px;font-weight:800}.avatars img:first-child{margin-left:0}.class-enter{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#F1F0FF;color:var(--primary);font-size:13px}
 
     .next-class-card{position:relative;height:141px;overflow:hidden;padding:15px 17px;border-radius:14px;background:linear-gradient(135deg,#6F6CFF,#8B7CFF);color:#fff;box-shadow:0 12px 28px rgba(111,108,255,.2)}
     .next-class-card:after{content:"";position:absolute;width:220px;height:220px;right:-80px;top:-105px;border:34px solid rgba(255,255,255,.08);border-radius:50%}
     .next-label{font-size:9px;font-weight:700;opacity:.82}.next-class-card h2{margin:5px 0 2px;font-size:17px}.next-class-card p{margin:0;font-size:9px;opacity:.84}
+    .countdown{position:absolute;right:17px;top:13px;z-index:2;display:flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.14);font-size:8px;font-weight:800;backdrop-filter:blur(8px)}
     .next-footer{position:absolute;left:17px;right:17px;bottom:13px;display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:1px solid rgba(255,255,255,.28);font-size:9px}.join-btn{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;background:#fff;color:#675FD9;font-weight:800}
-    .schedule-strip{height:91px;padding:13px 15px;border:1px solid #ECECF1;border-radius:13px;background:#fff}
-    .schedule-strip h3{margin:0 0 10px;font-size:11px}.schedule-items{display:flex;gap:8px}.schedule-item{flex:1;padding:8px 9px;border-radius:9px;background:#F7F7FA}.schedule-item strong{display:block;font-size:9px}.schedule-item span{font-size:7px;color:var(--muted)}
+    .schedule-strip{height:198px;padding:13px 15px;border:1px solid #ECECF1;border-radius:13px;background:#fff}
+    .schedule-strip h3{margin:0 0 8px;font-size:11px}.schedule-items{display:flex;flex-direction:column;gap:6px}.schedule-item{display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:9px;padding:7px 9px;border-radius:9px;background:#F7F7FA}.schedule-day{display:grid!important;place-items:center;width:28px;height:28px;border-radius:8px;background:#ECEAFF;color:var(--primary)!important;font-size:7px!important;font-weight:900}.schedule-copy strong{display:block;font-size:8.5px}.schedule-copy span{display:block;margin-top:1px;font-size:6.5px;color:var(--muted)}.schedule-time{text-align:right;font-size:7px!important;color:var(--text)!important;font-weight:800}
 
     .right-column{height:100%}.right-overview{gap:12px}
     .profile-card{position:relative;height:141px;overflow:hidden;border:1px solid #ECECF1;border-radius:13px;background:#fff;text-align:center}
@@ -104,7 +105,7 @@
     .profile-card h3{margin:0;font-size:11px}.profile-card p{margin:2px 0 0;color:var(--muted);font-size:7px}
     .calendar-card{height:201px;padding:12px 13px;border:1px solid #ECECF1;border-radius:13px;background:#fff}
     .calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}.calendar-header button{display:grid;place-items:center;width:23px;height:23px;border:1px solid #ECECF1;border-radius:50%;background:#fff;color:#777A89}.calendar-header strong{font-size:10px}
-    .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.calendar-grid span{display:grid;place-items:center;height:18px;border-radius:50%;color:#5F6270;font-size:7px}.calendar-grid .day-name{color:#A0A3B1;font-weight:700}.calendar-grid .today{background:var(--primary);color:#fff;font-weight:800}.calendar-grid .has-event{position:relative;color:var(--primary);font-weight:700}.calendar-grid .has-event:after{content:"";position:absolute;bottom:0;width:3px;height:3px;border-radius:50%;background:var(--primary)}
+    .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.calendar-grid span{display:grid;place-items:center;justify-self:center;width:18px;height:18px;aspect-ratio:1;border-radius:50%;color:#5F6270;font-size:7px}.calendar-grid .day-name{color:#A0A3B1;font-weight:700}.calendar-grid .today{background:var(--primary);color:#fff;font-weight:800}.calendar-grid .has-event{position:relative;color:var(--primary);font-weight:700}.calendar-grid .has-event:after{content:"";position:absolute;bottom:0;width:3px;height:3px;border-radius:50%;background:var(--primary)}
     .tasks-panel{height:247px}.tasks-panel h2{margin:0 0 7px;font-size:12px}.task-card{height:218px;padding:7px 11px;border:1px solid #ECECF1;border-radius:13px;background:#fff}
     .task{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #F0F0F4}.task:last-child{border-bottom:0}.task-icon{display:grid;place-items:center;width:31px;height:31px;border-radius:9px;background:#F1F0FF;color:var(--primary);font-size:14px}.task:nth-child(2) .task-icon{background:#ECF8F3;color:var(--green)}.task:nth-child(3) .task-icon{background:#FFF3E8;color:var(--orange)}.task h4{margin:0 0 2px;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.task p{margin:0;color:var(--muted);font-size:6.5px}.due{padding:4px 6px;border-radius:999px;background:#FEF3C7;color:#D57A12;font-size:6px;font-weight:800}.due.urgent{background:#FEE2E2;color:#D84444}
 
@@ -199,20 +200,21 @@
                       <div class="section-heading"><h2>Kelas Anda</h2><div class="arrows"><button><i class="ri-arrow-left-s-line"></i></button><button><i class="ri-arrow-right-s-line"></i></button></div></div>
                       <div class="carousel-window">
                         <div class="class-track">
-                          <article class="class-card"><div class="class-cover"><i class="ri-code-s-slash-line"></i></div><h3>Rekayasa Perangkat Lunak</h3><p>Dr. Ahmad Fikri · Lab RPL</p><div class="class-meta"><div class="avatars"><span>AF</span><span>RA</span><span>+24</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
-                          <article class="class-card"><div class="class-cover"><i class="ri-image-2-line"></i></div><h3>Pengolahan Citra Digital</h3><p>Rina Kurniawati, M.Kom. · B.203</p><div class="class-meta"><div class="avatars"><span>RK</span><span>MA</span><span>+21</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
-                          <article class="class-card"><div class="class-cover"><i class="ri-brain-line"></i></div><h3>Kecerdasan Buatan</h3><p>Dedi Irawan, M.Kom. · A.301</p><div class="class-meta"><div class="avatars"><span>DI</span><span>NF</span><span>+27</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
-                          <article class="class-card"><div class="class-cover"><i class="ri-shield-keyhole-line"></i></div><h3>Keamanan Informasi</h3><p>Siti Rahma, M.Kom. · B.205</p><div class="class-meta"><div class="avatars"><span>SR</span><span>AR</span><span>+19</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
-                          <article class="class-card"><div class="class-cover"><i class="ri-code-s-slash-line"></i></div><h3>Rekayasa Perangkat Lunak</h3><p>Dr. Ahmad Fikri · Lab RPL</p><div class="class-meta"><div class="avatars"><span>AF</span><span>RA</span><span>+24</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
-                          <article class="class-card"><div class="class-cover"><i class="ri-image-2-line"></i></div><h3>Pengolahan Citra Digital</h3><p>Rina Kurniawati, M.Kom. · B.203</p><div class="class-meta"><div class="avatars"><span>RK</span><span>MA</span><span>+21</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
-                          <article class="class-card"><div class="class-cover"><i class="ri-brain-line"></i></div><h3>Kecerdasan Buatan</h3><p>Dedi Irawan, M.Kom. · A.301</p><div class="class-meta"><div class="avatars"><span>DI</span><span>NF</span><span>+27</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
-                          <article class="class-card"><div class="class-cover"><i class="ri-shield-keyhole-line"></i></div><h3>Keamanan Informasi</h3><p>Siti Rahma, M.Kom. · B.205</p><div class="class-meta"><div class="avatars"><span>SR</span><span>AR</span><span>+19</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
+                          <article class="class-card"><div class="class-cover"><span>💻</span></div><h3>Rekayasa Perangkat Lunak</h3><p>Dr. Ahmad Fikri · Lab RPL</p><div class="class-meta"><div class="avatars"><img src="https://i.pravatar.cc/80?img=12" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><img src="https://i.pravatar.cc/80?img=47" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><span>+24</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
+                          <article class="class-card"><div class="class-cover"><span>🖼️</span></div><h3>Pengolahan Citra Digital</h3><p>Rina Kurniawati, M.Kom. · B.203</p><div class="class-meta"><div class="avatars"><img src="https://i.pravatar.cc/80?img=32" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><img src="https://i.pravatar.cc/80?img=44" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><span>+21</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
+                          <article class="class-card"><div class="class-cover"><span>🤖</span></div><h3>Kecerdasan Buatan</h3><p>Dedi Irawan, M.Kom. · A.301</p><div class="class-meta"><div class="avatars"><img src="https://i.pravatar.cc/80?img=11" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><img src="https://i.pravatar.cc/80?img=49" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><span>+27</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
+                          <article class="class-card"><div class="class-cover"><span>🔐</span></div><h3>Keamanan Informasi</h3><p>Siti Rahma, M.Kom. · B.205</p><div class="class-meta"><div class="avatars"><img src="https://i.pravatar.cc/80?img=5" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><img src="https://i.pravatar.cc/80?img=45" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><span>+19</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
+                          <article class="class-card"><div class="class-cover"><span>💻</span></div><h3>Rekayasa Perangkat Lunak</h3><p>Dr. Ahmad Fikri · Lab RPL</p><div class="class-meta"><div class="avatars"><img src="https://i.pravatar.cc/80?img=12" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><img src="https://i.pravatar.cc/80?img=47" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><span>+24</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
+                          <article class="class-card"><div class="class-cover"><span>🖼️</span></div><h3>Pengolahan Citra Digital</h3><p>Rina Kurniawati, M.Kom. · B.203</p><div class="class-meta"><div class="avatars"><img src="https://i.pravatar.cc/80?img=32" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><img src="https://i.pravatar.cc/80?img=44" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><span>+21</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
+                          <article class="class-card"><div class="class-cover"><span>🤖</span></div><h3>Kecerdasan Buatan</h3><p>Dedi Irawan, M.Kom. · A.301</p><div class="class-meta"><div class="avatars"><img src="https://i.pravatar.cc/80?img=11" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><img src="https://i.pravatar.cc/80?img=49" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><span>+27</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
+                          <article class="class-card"><div class="class-cover"><span>🔐</span></div><h3>Keamanan Informasi</h3><p>Siti Rahma, M.Kom. · B.205</p><div class="class-meta"><div class="avatars"><img src="https://i.pravatar.cc/80?img=5" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><img src="https://i.pravatar.cc/80?img=45" alt="Anggota kelas" onerror="this.onerror=null;this.src='ardan.jpg'"><span>+19</span></div><span class="class-enter"><i class="ri-arrow-right-line"></i></span></div></article>
                         </div>
                       </div>
                     </section>
 
                     <article class="next-class-card" data-focus="next-class">
                       <span class="next-label">KELAS BERIKUTNYA · HARI INI</span>
+                      <span class="countdown"><i class="ri-timer-line"></i> Dimulai dalam <b id="class-countdown">01:24:36</b></span>
                       <h2>Rekayasa Perangkat Lunak</h2>
                       <p>Dr. Ahmad Fikri · Laboratorium RPL</p>
                       <div class="next-footer"><span><i class="ri-time-line"></i> 13.00–15.30 WIB</span><span class="join-btn"><i class="ri-video-on-line"></i> Buka Kelas</span></div>
@@ -220,7 +222,11 @@
 
                     <section class="schedule-strip">
                       <h3>Jadwal Lainnya Minggu Ini</h3>
-                      <div class="schedule-items"><div class="schedule-item"><strong>Pengolahan Citra Digital</strong><span>Selasa · 09.30</span></div><div class="schedule-item"><strong>Kecerdasan Buatan</strong><span>Rabu · 13.00</span></div><div class="schedule-item"><strong>Keamanan Informasi</strong><span>Jumat · 08.00</span></div></div>
+                      <div class="schedule-items">
+                        <div class="schedule-item"><span class="schedule-day">SEL</span><div class="schedule-copy"><strong>Pengolahan Citra Digital</strong><span>Rina Kurniawati, M.Kom. · Ruang B.203</span></div><span class="schedule-time">09.30–12.00</span></div>
+                        <div class="schedule-item"><span class="schedule-day">RAB</span><div class="schedule-copy"><strong>Kecerdasan Buatan</strong><span>Dedi Irawan, M.Kom. · Ruang A.301</span></div><span class="schedule-time">13.00–15.30</span></div>
+                        <div class="schedule-item"><span class="schedule-day">JUM</span><div class="schedule-copy"><strong>Keamanan Informasi</strong><span>Siti Rahma, M.Kom. · Ruang B.205</span></div><span class="schedule-time">08.00–10.30</span></div>
+                      </div>
                     </section>
                   </div>
 
@@ -280,15 +286,15 @@
 
   <nav class="controls" aria-label="Navigasi presentasi">
     <a class="deck-prev" href="10.html" aria-label="Slide sebelumnya">←</a>
-    <span class="progress">11 / 11</span>
-    <a class="deck-next" href="11.html" aria-label="Slide berikutnya" aria-disabled="true">→</a>
+    <span class="progress">11 / 12</span>
+    <a class="deck-next" href="12.html" aria-label="Slide berikutnya" aria-disabled="false">→</a>
     <button class="deck-fullscreen" type="button" aria-label="Masuk atau keluar layar penuh" title="Layar penuh (F)"><i class="ri-fullscreen-line"></i></button>
   </nav>
 
   <script>
   (() => {
     const PAGE_NUMBER = 11;
-    const PAGE_FILES = ["1.html","2.html","3.html","4.html","5.html","6.html","7.html","8.html","9.html","10.html","11.html"];
+    const PAGE_FILES = ["1.html","2.html","3.html","4.html","5.html","6.html","7.html","8.html","9.html","10.html","11.html","12.html"];
     const TOTAL_PAGES = PAGE_FILES.length;
     const embedded = window.self !== window.top;
     const stage = document.querySelector('.dashboard-stage');
@@ -421,8 +427,7 @@
       tourTitle.textContent = step.title;
       tourText.textContent = step.text;
       tourPrev.disabled = false;
-      tourNext.disabled = currentStep === steps.length - 1;
-      if (deckNext) deckNext.setAttribute('aria-disabled', String(currentStep === steps.length - 1));
+      tourNext.disabled = false;
       renderDots();
 
       if (!step.selector || !localRects[step.key]) {
@@ -445,7 +450,10 @@
         navigateTo(10);
         return;
       }
-      if (target >= steps.length) return;
+      if (target >= steps.length) {
+        navigateTo(12);
+        return;
+      }
       currentStep = target;
       renderStep();
     }
@@ -459,7 +467,7 @@
       }
       if (deckNext) {
         deckNext.href = PAGE_FILES[Math.min(TOTAL_PAGES-1,currentPage)];
-        deckNext.setAttribute('aria-disabled', String(currentPage === TOTAL_PAGES && currentStep === steps.length-1));
+        deckNext.setAttribute('aria-disabled', String(currentPage === TOTAL_PAGES));
       }
     }
 
@@ -487,8 +495,8 @@
 
     tourPrev.addEventListener('click', () => changeStep(-1));
     tourNext.addEventListener('click', () => changeStep(1));
-    deckPrev.addEventListener('click', event => { event.preventDefault(); changeStep(-1); });
-    deckNext.addEventListener('click', event => { event.preventDefault(); changeStep(1); });
+    deckPrev.addEventListener('click', event => { event.preventDefault(); navigateTo(10); });
+    deckNext.addEventListener('click', event => { event.preventDefault(); navigateTo(12); });
     fsButton.addEventListener('click', toggleFullscreen);
 
     document.addEventListener('click', event => {
@@ -542,6 +550,19 @@
         frames.set(page,frame);
       });
     }
+
+    const countdownOutput = document.getElementById('class-countdown');
+    let countdownSeconds = (1 * 60 * 60) + (24 * 60) + 36;
+    function updateCountdown() {
+      if (!countdownOutput) return;
+      const hours = Math.floor(countdownSeconds / 3600);
+      const minutes = Math.floor((countdownSeconds % 3600) / 60);
+      const seconds = countdownSeconds % 60;
+      countdownOutput.textContent = [hours,minutes,seconds].map(value => String(value).padStart(2,'0')).join(':');
+      countdownSeconds = countdownSeconds > 0 ? countdownSeconds - 1 : 0;
+    }
+    updateCountdown();
+    window.setInterval(updateCountdown,1000);
 
     requestAnimationFrame(() => {
       captureLocalRects();
