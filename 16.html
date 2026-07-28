@@ -9,290 +9,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
   <style>
-    :root{
-      --bg:#F7F7FA;--text:#1E1F24;--muted:#6C6F7F;--border:#E5E6EE;
-      --primary:#6F6CFF;--primary2:#8B7CFF;--blue:#4F8DF7;--green:#2EAD78;
-      --surface:rgba(255,255,255,.72);--shadow:0 18px 42px rgba(30,31,36,.065)
-    }
-    *{box-sizing:border-box}
-    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);font-family:Poppins,Arial,sans-serif;color:var(--text)}
-    body{position:relative}
-    button{font:inherit}
-
-    .bg{position:fixed;inset:0;background:linear-gradient(135deg,#F7F7FA 0%,#EEF2FF 100%);z-index:0}
-    .orb{position:absolute;border-radius:999px;filter:blur(86px);animation:float 25s ease-in-out infinite alternate}
-    .orb.one{width:44vw;height:44vw;left:-14vw;top:-18vw;background:rgba(111,108,255,.16)}
-    .orb.two{width:34vw;height:34vw;right:-9vw;bottom:-14vw;background:rgba(79,141,247,.15);animation-delay:-8s}
-    .orb.three{width:28vw;height:28vw;left:45vw;top:43vh;background:rgba(139,124,255,.11);animation-delay:-15s}
-    @keyframes float{from{transform:translate(0,0) scale(1)}to{transform:translate(3vw,3vh) scale(1.08)}}
-    .pattern{position:absolute;inset:0;opacity:.55;background-image:radial-gradient(circle at 1px 1px,rgba(111,108,255,.16) 1px,transparent 0);background-size:34px 34px}
-
-    .deck{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
-    .top,.bottom{display:flex;align-items:center;justify-content:space-between;flex:0 0 auto}
-    .top{padding:28px 60px 18px}
-    .bottom{padding:14px 60px 28px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;overflow:hidden;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:22px;font-weight:900;box-shadow:0 12px 28px rgba(111,108,255,.22)}
-    .brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
-    .brand-fallback{place-items:center;width:100%;height:100%}
-    .brand-name,.event{margin:0;font-weight:800;text-transform:uppercase;letter-spacing:.12em}
-    .brand-name{font-size:20px}
-    .event{font-size:16px;letter-spacing:.08em}
-    .unsera{display:grid;place-items:center;width:64px;height:64px;overflow:hidden}
-    .unsera img{width:100%;height:100%;object-fit:contain;display:block}
-    .unsera-fallback{place-items:center;width:100%;height:100%;border:2px solid rgba(111,108,255,.6);border-radius:50%;color:var(--primary);font-size:10px;font-weight:900}
-    .institution{margin-left:18px;text-transform:uppercase;line-height:1.36;font-size:12px;font-weight:700;letter-spacing:.05em}
-    .institution p{margin:0}
-    .foot-left{display:flex;align-items:center}
-
-    .main{flex:1;min-height:0;padding:0 60px;display:flex;flex-direction:column;gap:20px}
-    .title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;min-height:106px}
-    .kicker{display:flex;align-items:center;gap:12px;margin:0 0 10px;color:var(--primary);font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
-    .kicker:before{content:"";width:38px;height:3px;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--primary2))}
-    .title{margin:0;font-size:54px;line-height:1;font-weight:900;letter-spacing:-.045em;text-transform:uppercase}
-    .title-art{position:relative;display:grid;place-items:center;width:78px;height:78px;margin-right:8px;color:var(--primary);font-size:34px}
-    .title-art:before{content:"";position:absolute;inset:4px;border:1px solid rgba(111,108,255,.2);border-radius:24px;transform:rotate(8deg)}
-    .title-art:after{content:"";position:absolute;inset:13px;border-radius:17px;background:linear-gradient(135deg,rgba(111,108,255,.13),rgba(79,141,247,.08));z-index:-1}
-
-    .content-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:42px;flex:1;min-height:0;margin-bottom:10px;position:relative}
-    .content-grid:before{content:"";position:absolute;left:50%;top:9px;bottom:8px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 12%,var(--border) 88%,transparent)}
-    .section{min-width:0;display:flex;flex-direction:column}
-    .section-head{display:flex;align-items:center;gap:13px;padding-bottom:13px;border-bottom:2px solid var(--text)}
-    .section-head .icon{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;background:#F1F0FF;color:var(--primary);font-size:20px}
-    .section.saran .section-head .icon{background:#ECF8F3;color:var(--green)}
-    .section-head h2{margin:0;font-size:23px;line-height:1.1;font-weight:900;letter-spacing:-.025em}
-    .items{display:grid;grid-template-rows:repeat(3,minmax(0,1fr));flex:1;min-height:0}
-    .item{display:grid;grid-template-columns:47px minmax(0,1fr);gap:15px;align-content:center;padding:14px 4px;border-bottom:1px solid var(--border);position:relative}
-    .item:last-child{border-bottom:0}
-    .number{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;background:#F1F0FF;color:var(--primary);font-size:12px;font-weight:900;box-shadow:inset 0 0 0 1px rgba(111,108,255,.08)}
-    .saran .number{background:#ECF8F3;color:var(--green);box-shadow:inset 0 0 0 1px rgba(46,173,120,.08)}
-    .copy h3{margin:0 0 7px;font-size:15.2px;line-height:1.35;font-weight:900;letter-spacing:-.015em}
-    .copy p{margin:0;color:var(--muted);font-size:12.3px;line-height:1.52;font-weight:500}
-    .accent-line{position:absolute;left:3px;top:50%;width:2px;height:0;border-radius:999px;background:var(--primary);opacity:0;transition:.3s}
-    .saran .accent-line{background:var(--green)}
-    .item:hover .accent-line{height:52%;top:24%;opacity:.8}
-
-    .native-hidden{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
-    .deck-frame{position:fixed;inset:0;z-index:900;width:100%;height:100%;border:0;background:#F7F7FA;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .34s ease,visibility .34s ease}
-    .deck-frame.is-current{opacity:1;visibility:visible;pointer-events:auto}
-    .controls{position:fixed;right:26px;bottom:22px;z-index:1000;display:flex;align-items:center;gap:8px;padding:7px;border:1px solid rgba(255,255,255,.9);border-radius:16px;background:rgba(255,255,255,.82);box-shadow:0 14px 35px rgba(30,31,36,.13);backdrop-filter:blur(18px)}
-    .controls a,.controls button{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:11px;background:transparent;color:var(--text);text-decoration:none;font:800 18px/1 Poppins;cursor:pointer}
-    .controls a:hover,.controls button:hover{background:#F1F0FF;color:var(--primary)}
-    .controls a[aria-disabled="true"]{opacity:.34;pointer-events:none}
-    .progress{font-size:12px;font-weight:800;color:var(--muted);min-width:64px;text-align:center;letter-spacing:.08em}
-
-    @media(max-aspect-ratio:16/10){
-      .top{padding:20px 54px 12px}.bottom{padding:8px 54px 20px}.main{padding:0 54px;gap:13px}.title-row{min-height:82px}.title{font-size:46px}.title-art{width:64px;height:64px;font-size:29px}.content-grid{gap:34px}.section-head{padding-bottom:9px}.section-head .icon{width:34px;height:34px;font-size:18px}.section-head h2{font-size:20px}.item{grid-template-columns:42px minmax(0,1fr);gap:12px;padding:9px 3px}.number{width:38px;height:38px;font-size:11px}.copy h3{font-size:13.4px;margin-bottom:5px}.copy p{font-size:10.9px;line-height:1.46}.unsera{width:58px;height:58px}.institution{font-size:11px}
-    }
-    @media(max-width:900px){
-      .top{padding-left:28px;padding-right:28px}.bottom{padding-left:28px;padding-right:28px}.main{padding-left:28px;padding-right:28px}.content-grid{gap:22px}.title{font-size:40px}.title-art{display:none}.copy h3{font-size:12px}.copy p{font-size:9.7px}.controls{right:14px;bottom:14px}
-    }
-    @media(max-aspect-ratio:4/3){
-      .content-grid{gap:24px}.copy p{font-size:10px}.copy h3{font-size:12.4px}.item{padding-top:8px;padding-bottom:8px}
-    }
-    html:fullscreen .copy h3,html:-webkit-full-screen .copy h3{font-size:15.4px}
-    html:fullscreen .copy p,html:-webkit-full-screen .copy p{font-size:12.4px;line-height:1.52}
+    :root{--bg:#F7F7FA;--text:#1E1F24;--muted:#6C6F7F;--border:#E5E6EE;--primary:#6F6CFF;--primary2:#8B7CFF;--blue:#4F8DF7;--green:#2EAD78;--surface:rgba(255,255,255,.72);--shadow:0 18px 42px rgba(30,31,36,.065)}
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);font-family:Poppins,Arial,sans-serif;color:var(--text)}body{position:relative}button{font:inherit}
+    .bg{position:fixed;inset:0;background:linear-gradient(135deg,#F7F7FA 0%,#EEF2FF 100%);z-index:0}.orb{position:absolute;border-radius:999px;filter:blur(86px);animation:float 25s ease-in-out infinite alternate}.orb.one{width:44vw;height:44vw;left:-14vw;top:-18vw;background:rgba(111,108,255,.16)}.orb.two{width:34vw;height:34vw;right:-9vw;bottom:-14vw;background:rgba(79,141,247,.15);animation-delay:-8s}.orb.three{width:28vw;height:28vw;left:45vw;top:43vh;background:rgba(139,124,255,.11);animation-delay:-15s}@keyframes float{from{transform:translate(0,0) scale(1)}to{transform:translate(3vw,3vh) scale(1.08)}}.pattern{position:absolute;inset:0;opacity:.55;background-image:radial-gradient(circle at 1px 1px,rgba(111,108,255,.16) 1px,transparent 0);background-size:34px 34px}
+    .deck{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}.top,.bottom{display:flex;align-items:center;justify-content:space-between;flex:0 0 auto}.top{padding:28px 60px 18px}.bottom{padding:14px 60px 28px}.brand{display:flex;align-items:center;gap:14px}.brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;overflow:hidden;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-size:22px;font-weight:900;box-shadow:0 12px 28px rgba(111,108,255,.22)}.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}.brand-fallback{place-items:center;width:100%;height:100%}.brand-name,.event{margin:0;font-weight:800;text-transform:uppercase;letter-spacing:.12em}.brand-name{font-size:20px}.event{font-size:16px;letter-spacing:.08em}.unsera{display:grid;place-items:center;width:64px;height:64px;overflow:hidden}.unsera img{width:100%;height:100%;object-fit:contain;display:block}.unsera-fallback{place-items:center;width:100%;height:100%;border:2px solid rgba(111,108,255,.6);border-radius:50%;color:var(--primary);font-size:10px;font-weight:900}.institution{margin-left:18px;text-transform:uppercase;line-height:1.36;font-size:12px;font-weight:700;letter-spacing:.05em}.institution p{margin:0}.foot-left{display:flex;align-items:center}
+    .main{flex:1;min-height:0;padding:0 60px;display:flex;flex-direction:column;gap:20px}.title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;min-height:106px}.kicker{display:flex;align-items:center;gap:12px;margin:0 0 10px;color:var(--primary);font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.kicker:before{content:"";width:38px;height:3px;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--primary2))}.title{margin:0;font-size:54px;line-height:1;font-weight:900;letter-spacing:-.045em;text-transform:uppercase}.title-art{position:relative;display:grid;place-items:center;width:78px;height:78px;margin-right:8px;color:var(--primary);font-size:34px}.title-art:before{content:"";position:absolute;inset:4px;border:1px solid rgba(111,108,255,.2);border-radius:24px;transform:rotate(8deg)}.title-art:after{content:"";position:absolute;inset:13px;border-radius:17px;background:linear-gradient(135deg,rgba(111,108,255,.13),rgba(79,141,247,.08));z-index:-1}
+    .content-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:42px;flex:1;min-height:0;margin-bottom:10px;position:relative}.content-grid:before{content:"";position:absolute;left:50%;top:9px;bottom:8px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 12%,var(--border) 88%,transparent)}.section{min-width:0;display:flex;flex-direction:column}.section-head{display:flex;align-items:center;gap:13px;padding-bottom:13px;border-bottom:2px solid var(--text)}.section-head .icon{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;background:#F1F0FF;color:var(--primary);font-size:20px}.section.saran .section-head .icon{background:#ECF8F3;color:var(--green)}.section-head h2{margin:0;font-size:23px;line-height:1.1;font-weight:900;letter-spacing:-.025em}.items{display:grid;grid-template-rows:repeat(3,minmax(0,1fr));flex:1;min-height:0}.item{display:grid;grid-template-columns:47px minmax(0,1fr);gap:15px;align-content:center;padding:14px 4px;border-bottom:1px solid var(--border);position:relative}.item:last-child{border-bottom:0}.number{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;background:#F1F0FF;color:var(--primary);font-size:12px;font-weight:900;box-shadow:inset 0 0 0 1px rgba(111,108,255,.08)}.saran .number{background:#ECF8F3;color:var(--green);box-shadow:inset 0 0 0 1px rgba(46,173,120,.08)}.copy h3{margin:0 0 7px;font-size:15.2px;line-height:1.35;font-weight:900;letter-spacing:-.015em}.copy p{margin:0;color:var(--muted);font-size:12.3px;line-height:1.52;font-weight:500}.accent-line{position:absolute;left:3px;top:50%;width:2px;height:0;border-radius:999px;background:var(--primary);opacity:0;transition:.3s}.saran .accent-line{background:var(--green)}.item:hover .accent-line{height:52%;top:24%;opacity:.8}
+    .native-hidden{opacity:0!important;visibility:hidden!important;pointer-events:none!important}.deck-frame{position:fixed;inset:0;z-index:900;width:100%;height:100%;border:0;background:#F7F7FA;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .34s ease,visibility .34s ease}.deck-frame.is-current{opacity:1;visibility:visible;pointer-events:auto}.controls{position:fixed;right:26px;bottom:22px;z-index:1000;display:flex;align-items:center;gap:8px;padding:7px;border:1px solid rgba(255,255,255,.9);border-radius:16px;background:rgba(255,255,255,.82);box-shadow:0 14px 35px rgba(30,31,36,.13);backdrop-filter:blur(18px)}.controls a,.controls button{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:11px;background:transparent;color:var(--text);text-decoration:none;font:800 18px/1 Poppins;cursor:pointer}.controls a:hover,.controls button:hover{background:#F1F0FF;color:var(--primary)}.controls a[aria-disabled="true"]{opacity:.34;pointer-events:none}.progress{font-size:12px;font-weight:800;color:var(--muted);min-width:64px;text-align:center;letter-spacing:.08em}
+    @media(max-aspect-ratio:16/10){.top{padding:20px 54px 12px}.bottom{padding:8px 54px 20px}.main{padding:0 54px;gap:13px}.title-row{min-height:82px}.title{font-size:46px}.title-art{width:64px;height:64px;font-size:29px}.content-grid{gap:34px}.section-head{padding-bottom:9px}.section-head .icon{width:34px;height:34px;font-size:18px}.section-head h2{font-size:20px}.item{grid-template-columns:42px minmax(0,1fr);gap:12px;padding:9px 3px}.number{width:38px;height:38px;font-size:11px}.copy h3{font-size:13.4px;margin-bottom:5px}.copy p{font-size:10.9px;line-height:1.46}.unsera{width:58px;height:58px}.institution{font-size:11px}}
+    @media(max-width:900px){.top{padding-left:28px;padding-right:28px}.bottom{padding-left:28px;padding-right:28px}.main{padding-left:28px;padding-right:28px}.content-grid{gap:22px}.title{font-size:40px}.title-art{display:none}.copy h3{font-size:12px}.copy p{font-size:9.7px}.controls{right:14px;bottom:14px}}
+    @media(max-aspect-ratio:4/3){.content-grid{gap:24px}.copy p{font-size:10px}.copy h3{font-size:12.4px}.item{padding-top:8px;padding-bottom:8px}}
+    html:fullscreen .copy h3,html:-webkit-full-screen .copy h3{font-size:15.4px}html:fullscreen .copy p,html:-webkit-full-screen .copy p{font-size:12.4px;line-height:1.52}
   </style>
 </head>
 <body data-page="16">
   <div class="bg"><div class="orb one"></div><div class="orb two"></div><div class="orb three"></div><div class="pattern"></div></div>
-
   <div class="deck">
-    <header class="top">
-      <div class="brand">
-        <div class="brand-mark"><img src="academate_logo.png" alt="Logo Academate" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="brand-fallback" style="display:none">A</span></div>
-        <p class="brand-name">Academate</p>
-      </div>
-      <p class="event">Sidang Kolokium 2026</p>
-    </header>
-
+    <header class="top"><div class="brand"><div class="brand-mark"><img src="academate_logo.png" alt="Logo Academate" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="brand-fallback" style="display:none">A</span></div><p class="brand-name">Academate</p></div><p class="event">Sidang Kolokium 2026</p></header>
     <main class="main">
-      <section class="title-row">
-        <div>
-          <p class="kicker">Slide 16</p>
-          <h1 class="title">Kesimpulan &amp; Saran</h1>
-        </div>
-        <div class="title-art" aria-hidden="true"><i class="ri-checkbox-circle-line"></i></div>
-      </section>
-
+      <section class="title-row"><div><p class="kicker">Slide 16</p><h1 class="title">Kesimpulan &amp; Saran</h1></div><div class="title-art" aria-hidden="true"><i class="ri-checkbox-circle-line"></i></div></section>
       <section class="content-grid">
-        <section class="section kesimpulan">
-          <div class="section-head"><span class="icon"><i class="ri-check-double-line"></i></span><h2>Kesimpulan</h2></div>
-          <div class="items">
-            <article class="item"><span class="accent-line"></span><div class="number">01</div><div class="copy"><h3>01 — Academate berhasil dikembangkan</h3><p>Academate berhasil dibuat sebagai platform classroom berbasis Progressive Web App (PWA) yang dapat digunakan untuk mendukung kegiatan akademik mahasiswa.</p></div></article>
-            <article class="item"><span class="accent-line"></span><div class="number">02</div><div class="copy"><h3>02 — Fitur utama berjalan dengan baik</h3><p>Fitur seperti kelas, tugas, jadwal, catatan, diskusi, dan notifikasi telah diterapkan dan diuji menggunakan Black-box Testing.</p></div></article>
-            <article class="item"><span class="accent-line"></span><div class="number">03</div><div class="copy"><h3>03 — Kegiatan akademik jadi lebih terpusat</h3><p>Academate membantu mahasiswa mengelola informasi kelas, tugas, jadwal, dan diskusi dalam satu tempat, sehingga informasi lebih mudah ditemukan dan tidak hanya bergantung pada chat.</p></div></article>
-          </div>
-        </section>
-
-        <section class="section saran">
-          <div class="section-head"><span class="icon"><i class="ri-lightbulb-flash-line"></i></span><h2>Saran</h2></div>
-          <div class="items">
-            <article class="item"><span class="accent-line"></span><div class="number">01</div><div class="copy"><h3>01 — Integrasi dengan sistem kampus</h3><p>Academate dapat dikembangkan agar terhubung dengan SPADA atau sistem akademik kampus, sehingga data mahasiswa dan jadwal bisa masuk secara otomatis.</p></div></article>
-            <article class="item"><span class="accent-line"></span><div class="number">02</div><div class="copy"><h3>02 — Pengujian dengan lebih banyak mahasiswa</h3><p>Pengujian berikutnya dapat melibatkan lebih banyak pengguna untuk melihat kemudahan penggunaan dan pengalaman mahasiswa saat memakai Academate.</p></div></article>
-            <article class="item"><span class="accent-line"></span><div class="number">03</div><div class="copy"><h3>03 — Notifikasi langsung dari aplikasi</h3><p>Sistem notifikasi dapat dikembangkan menggunakan web push notification, sehingga pengingat tugas dan jadwal dapat muncul langsung dari Academate tanpa bergantung pada Telegram.</p></div></article>
-          </div>
-        </section>
+        <section class="section kesimpulan"><div class="section-head"><span class="icon"><i class="ri-check-double-line"></i></span><h2>Kesimpulan</h2></div><div class="items">
+          <article class="item"><span class="accent-line"></span><div class="number">01</div><div class="copy"><h3>01 — Academate berhasil dikembangkan</h3><p>Academate berhasil dibuat sebagai platform classroom berbasis Progressive Web App (PWA) yang dapat digunakan untuk mendukung kegiatan akademik mahasiswa.</p></div></article>
+          <article class="item"><span class="accent-line"></span><div class="number">02</div><div class="copy"><h3>02 — Fitur utama berjalan dengan baik</h3><p>Fitur seperti kelas, tugas, jadwal, catatan, diskusi, dan notifikasi telah diterapkan dan diuji menggunakan Black-box Testing.</p></div></article>
+          <article class="item"><span class="accent-line"></span><div class="number">03</div><div class="copy"><h3>03 — Kegiatan akademik jadi lebih terpusat</h3><p>Academate membantu mahasiswa mengelola informasi kelas, tugas, jadwal, dan diskusi dalam satu tempat, sehingga informasi lebih mudah ditemukan dan tidak hanya bergantung pada chat.</p></div></article>
+        </div></section>
+        <section class="section saran"><div class="section-head"><span class="icon"><i class="ri-lightbulb-flash-line"></i></span><h2>Saran</h2></div><div class="items">
+          <article class="item"><span class="accent-line"></span><div class="number">01</div><div class="copy"><h3>01 — Integrasi dengan sistem kampus</h3><p>Academate dapat dikembangkan agar terhubung dengan SPADA atau sistem akademik kampus, sehingga data mahasiswa dan jadwal bisa masuk secara otomatis.</p></div></article>
+          <article class="item"><span class="accent-line"></span><div class="number">02</div><div class="copy"><h3>02 — Pengujian dengan lebih banyak mahasiswa</h3><p>Pengujian berikutnya dapat melibatkan lebih banyak pengguna untuk melihat kemudahan penggunaan dan pengalaman mahasiswa saat memakai Academate.</p></div></article>
+          <article class="item"><span class="accent-line"></span><div class="number">03</div><div class="copy"><h3>03 — Notifikasi langsung dari aplikasi</h3><p>Sistem notifikasi dapat dikembangkan menggunakan web push notification, sehingga pengingat tugas dan jadwal dapat muncul langsung dari Academate tanpa bergantung pada Telegram.</p></div></article>
+        </div></section>
       </section>
     </main>
-
-    <footer class="bottom">
-      <div class="foot-left">
-        <div class="unsera"><img src="unsera_logo.png" alt="Logo Universitas Serang Raya" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="unsera-fallback" style="display:none">UNSERA</span></div>
-        <div class="institution"><p>Program Studi Teknik Informatika</p><p>Fakultas Teknologi Informasi</p><p>Universitas Serang Raya</p></div>
-      </div>
-    </footer>
+    <footer class="bottom"><div class="foot-left"><div class="unsera"><img src="unsera_logo.png" alt="Logo Universitas Serang Raya" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="unsera-fallback" style="display:none">UNSERA</span></div><div class="institution"><p>Program Studi Teknik Informatika</p><p>Fakultas Teknologi Informasi</p><p>Universitas Serang Raya</p></div></div></footer>
   </div>
-
-  <nav class="controls" aria-label="Navigasi presentasi">
-    <a class="deck-prev" href="15.html" aria-label="Slide sebelumnya">←</a>
-    <span class="progress">16 / 16</span>
-    <a class="deck-next" href="16.html" aria-label="Slide berikutnya" aria-disabled="true">→</a>
-    <button class="deck-fullscreen" type="button" aria-label="Masuk atau keluar layar penuh" title="Layar penuh (F)"><i class="ri-fullscreen-line"></i></button>
-  </nav>
-
+  <nav class="controls" aria-label="Navigasi presentasi"><a class="deck-prev" href="15.html" aria-label="Slide sebelumnya">←</a><span class="progress">16 / 17</span><a class="deck-next" href="17.html" aria-label="Slide berikutnya">→</a><button class="deck-fullscreen" type="button" aria-label="Masuk atau keluar layar penuh" title="Layar penuh (F)"><i class="ri-fullscreen-line"></i></button></nav>
   <script>
-  (() => {
-    const PAGE_NUMBER = 16;
-    const PAGE_FILES = ["1.html","2.html","3.html","4.html","5.html","6.html","7.html","8.html","9.html","10.html","11.html","12.html","13.html","14.html","15.html","16.html"];
-    const TOTAL_PAGES = PAGE_FILES.length;
-    const embedded = window.self !== window.top;
-    const controls = document.querySelector('.controls');
-    const progress = document.querySelector('.progress');
-    const prev = document.querySelector('.deck-prev');
-    const next = document.querySelector('.deck-next');
-    const fsButton = document.querySelector('.deck-fullscreen');
-
-    function isTypingTarget(target) {
-      const tag = target && target.tagName ? target.tagName.toLowerCase() : '';
-      return tag === 'input' || tag === 'textarea' || tag === 'select' || (target && target.isContentEditable);
-    }
-
-    function requestFullscreen() {
-      const root = document.documentElement;
-      const request = root.requestFullscreen || root.webkitRequestFullscreen;
-      if (request) {
-        const result = request.call(root);
-        if (result && typeof result.catch === 'function') result.catch(() => {});
-      }
-    }
-
-    function exitFullscreen() {
-      const exit = document.exitFullscreen || document.webkitExitFullscreen;
-      if (exit) {
-        const result = exit.call(document);
-        if (result && typeof result.catch === 'function') result.catch(() => {});
-      }
-    }
-
-    function toggleFullscreen() {
-      const active = document.fullscreenElement || document.webkitFullscreenElement;
-      active ? exitFullscreen() : requestFullscreen();
-    }
-
-    if (embedded) {
-      document.body.classList.add('is-embedded');
-      if (controls) controls.style.display = 'none';
-      document.addEventListener('keydown', (event) => {
-        if (isTypingTarget(event.target)) return;
-        if (["ArrowRight","ArrowDown"," ","PageDown"].includes(event.key)) {
-          event.preventDefault();
-          window.top.postMessage({type:'academate:navigate', page: Math.min(TOTAL_PAGES, PAGE_NUMBER + 1)}, '*');
-        } else if (["ArrowLeft","ArrowUp","PageUp"].includes(event.key)) {
-          event.preventDefault();
-          window.top.postMessage({type:'academate:navigate', page: Math.max(1, PAGE_NUMBER - 1)}, '*');
-        } else if (event.key.toLowerCase() === 'f') {
-          event.preventDefault();
-          window.top.postMessage({type:'academate:fullscreen'}, '*');
-        }
-      });
-      window.top.postMessage({type:'academate:ready', page: PAGE_NUMBER}, '*');
-      return;
-    }
-
-    const nativeNodes = [document.querySelector('.bg'), document.querySelector('.deck')].filter(Boolean);
-    const frames = new Map();
-    let currentPage = PAGE_NUMBER;
-    let pendingPage = null;
-
-    PAGE_FILES.forEach((file, index) => {
-      const page = index + 1;
-      if (page === PAGE_NUMBER) return;
-      const frame = document.createElement('iframe');
-      frame.className = 'deck-frame';
-      frame.dataset.page = String(page);
-      frame.title = `Slide ${page} dari ${TOTAL_PAGES}`;
-      frame.src = `${file}?embedded=1`;
-      frame.setAttribute('aria-hidden', 'true');
-      frame.addEventListener('load', () => {
-        frame.dataset.ready = 'true';
-        if (pendingPage === page) switchTo(page);
-      }, {once:true});
-      document.body.appendChild(frame);
-      frames.set(page, frame);
-    });
-
-    function updateControls() {
-      if (progress) progress.textContent = `${String(currentPage).padStart(2,'0')} / ${String(TOTAL_PAGES).padStart(2,'0')}`;
-      if (prev) {
-        prev.href = PAGE_FILES[Math.max(0, currentPage - 2)];
-        prev.setAttribute('aria-disabled', String(currentPage === 1));
-      }
-      if (next) {
-        next.href = PAGE_FILES[Math.min(TOTAL_PAGES - 1, currentPage)];
-        next.setAttribute('aria-disabled', String(currentPage === TOTAL_PAGES));
-      }
-    }
-
-    function switchTo(page) {
-      page = Number(page);
-      if (!Number.isFinite(page) || page < 1 || page > TOTAL_PAGES || page === currentPage) return;
-      const target = page === PAGE_NUMBER ? null : frames.get(page);
-      if (target && target.dataset.ready !== 'true') {
-        pendingPage = page;
-        return;
-      }
-      pendingPage = null;
-      nativeNodes.forEach(node => node.classList.toggle('native-hidden', page !== PAGE_NUMBER));
-      frames.forEach((frame, number) => {
-        const active = number === page;
-        frame.classList.toggle('is-current', active);
-        frame.setAttribute('aria-hidden', String(!active));
-      });
-      currentPage = page;
-      updateControls();
-      try { window.history.replaceState({page: currentPage}, '', `#slide-${currentPage}`); } catch (_) {}
-    }
-
-    function navigate(delta) { switchTo(currentPage + delta); }
-
-    if (prev) prev.addEventListener('click', (event) => { event.preventDefault(); navigate(-1); });
-    if (next) next.addEventListener('click', (event) => { event.preventDefault(); navigate(1); });
-    if (fsButton) fsButton.addEventListener('click', toggleFullscreen);
-
-    document.addEventListener('keydown', (event) => {
-      if (isTypingTarget(event.target)) return;
-      if (["ArrowRight","ArrowDown"," ","PageDown"].includes(event.key)) {
-        event.preventDefault(); navigate(1);
-      } else if (["ArrowLeft","ArrowUp","PageUp"].includes(event.key)) {
-        event.preventDefault(); navigate(-1);
-      } else if (event.key.toLowerCase() === 'f') {
-        event.preventDefault(); toggleFullscreen();
-      }
-    });
-
-    window.addEventListener('message', (event) => {
-      if (!event.data || typeof event.data !== 'object') return;
-      if (event.data.type === 'academate:navigate') switchTo(event.data.page);
-      if (event.data.type === 'academate:fullscreen') toggleFullscreen();
-    });
-
-    window.addEventListener('popstate', (event) => {
-      if (event.state && event.state.page) switchTo(event.state.page);
-    });
-
-    updateControls();
-  })();
+  (()=>{const PAGE_NUMBER=16,PAGE_FILES=["1.html","2.html","3.html","4.html","5.html","6.html","7.html","8.html","9.html","10.html","11.html","12.html","13.html","14.html","15.html","16.html","17.html"],TOTAL_PAGES=PAGE_FILES.length,embedded=window.self!==window.top;const controls=document.querySelector('.controls'),progress=document.querySelector('.progress'),prev=document.querySelector('.deck-prev'),next=document.querySelector('.deck-next'),fsButton=document.querySelector('.deck-fullscreen');function isTypingTarget(target){const tag=target&&target.tagName?target.tagName.toLowerCase():'';return tag==='input'||tag==='textarea'||tag==='select'||(target&&target.isContentEditable)}function requestFullscreen(){const root=document.documentElement,request=root.requestFullscreen||root.webkitRequestFullscreen;if(request){const result=request.call(root);if(result&&typeof result.catch==='function')result.catch(()=>{})}}function exitFullscreen(){const exit=document.exitFullscreen||document.webkitExitFullscreen;if(exit){const result=exit.call(document);if(result&&typeof result.catch==='function')result.catch(()=>{})}}function toggleFullscreen(){const active=document.fullscreenElement||document.webkitFullscreenElement;active?exitFullscreen():requestFullscreen()}if(embedded){document.body.classList.add('is-embedded');if(controls)controls.style.display='none';document.addEventListener('keydown',event=>{if(isTypingTarget(event.target))return;if(["ArrowRight","ArrowDown"," ","PageDown"].includes(event.key)){event.preventDefault();window.top.postMessage({type:'academate:navigate',page:Math.min(TOTAL_PAGES,PAGE_NUMBER+1)},'*')}else if(["ArrowLeft","ArrowUp","PageUp"].includes(event.key)){event.preventDefault();window.top.postMessage({type:'academate:navigate',page:Math.max(1,PAGE_NUMBER-1)},'*')}else if(event.key.toLowerCase()==='f'){event.preventDefault();window.top.postMessage({type:'academate:fullscreen'},'*')}});window.top.postMessage({type:'academate:ready',page:PAGE_NUMBER},'*');return}const nativeNodes=[document.querySelector('.bg'),document.querySelector('.deck')].filter(Boolean),frames=new Map();let currentPage=PAGE_NUMBER,pendingPage=null;PAGE_FILES.forEach((file,index)=>{const page=index+1;if(page===PAGE_NUMBER)return;const frame=document.createElement('iframe');frame.className='deck-frame';frame.dataset.page=String(page);frame.title=`Slide ${page} dari ${TOTAL_PAGES}`;frame.src=`${file}?embedded=1`;frame.setAttribute('aria-hidden','true');frame.addEventListener('load',()=>{frame.dataset.ready='true';if(pendingPage===page)switchTo(page)},{once:true});document.body.appendChild(frame);frames.set(page,frame)});function updateControls(){if(progress)progress.textContent=`${String(currentPage).padStart(2,'0')} / ${String(TOTAL_PAGES).padStart(2,'0')}`;if(prev){prev.href=PAGE_FILES[Math.max(0,currentPage-2)];prev.setAttribute('aria-disabled',String(currentPage===1))}if(next){next.href=PAGE_FILES[Math.min(TOTAL_PAGES-1,currentPage)];next.setAttribute('aria-disabled',String(currentPage===TOTAL_PAGES))}}function switchTo(page){page=Number(page);if(!Number.isFinite(page)||page<1||page>TOTAL_PAGES||page===currentPage)return;const target=page===PAGE_NUMBER?null:frames.get(page);if(target&&target.dataset.ready!=='true'){pendingPage=page;return}pendingPage=null;nativeNodes.forEach(node=>node.classList.toggle('native-hidden',page!==PAGE_NUMBER));frames.forEach((frame,number)=>{const active=number===page;frame.classList.toggle('is-current',active);frame.setAttribute('aria-hidden',String(!active))});currentPage=page;updateControls();try{window.history.replaceState({page:currentPage},'',`#slide-${currentPage}`)}catch(_){}}function navigate(delta){switchTo(currentPage+delta)}if(prev)prev.addEventListener('click',event=>{event.preventDefault();navigate(-1)});if(next)next.addEventListener('click',event=>{event.preventDefault();navigate(1)});if(fsButton)fsButton.addEventListener('click',toggleFullscreen);document.addEventListener('keydown',event=>{if(isTypingTarget(event.target))return;if(["ArrowRight","ArrowDown"," ","PageDown"].includes(event.key)){event.preventDefault();navigate(1)}else if(["ArrowLeft","ArrowUp","PageUp"].includes(event.key)){event.preventDefault();navigate(-1)}else if(event.key.toLowerCase()==='f'){event.preventDefault();toggleFullscreen()}});window.addEventListener('message',event=>{if(!event.data||typeof event.data!=='object')return;if(event.data.type==='academate:navigate')switchTo(event.data.page);if(event.data.type==='academate:fullscreen')toggleFullscreen()});window.addEventListener('popstate',event=>{if(event.state&&event.state.page)switchTo(event.state.page)});updateControls()})();
   </script>
 </body>
 </html>
