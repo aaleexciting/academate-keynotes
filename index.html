@@ -91,8 +91,8 @@
 <body>
   <div class="deck-shell" id="deck-shell">
     <main class="deck-stage" id="deck-stage" aria-label="Presentasi Academate">
-      <iframe class="slide-frame" id="frame-a" title="Slide Academate" allow="fullscreen; autoplay" allowfullscreen></iframe>
-      <iframe class="slide-frame" id="frame-b" title="Slide Academate" allow="fullscreen; autoplay" allowfullscreen></iframe>
+      <iframe class="slide-frame" id="frame-a" title="Slide Academate" allow="fullscreen; autoplay" allowfullscreen aria-hidden="true"></iframe>
+      <iframe class="slide-frame" id="frame-b" title="Slide Academate" allow="fullscreen; autoplay" allowfullscreen aria-hidden="true"></iframe>
       <div class="deck-loader" id="deck-loader" role="status" aria-live="polite"><i class="ri-loader-4-line"></i><span>Memuat slide…</span></div>
       <section class="deck-error" id="deck-error" role="alert">
         <i class="ri-error-warning-line"></i>
@@ -115,7 +115,7 @@
     'use strict';
 
     const TOTAL_PAGES = 17;
-    const TRANSITION_MS = 360;
+    const TRANSITION_MS = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 360;
     const LOAD_TIMEOUT_MS = 10000;
     const SLIDE_FILES = Array.from({length: TOTAL_PAGES}, (_, index) => `${index + 1}.html`);
 
@@ -138,7 +138,7 @@
     let transitionToken = 0;
     let loadTimer = null;
     let loaderTimer = null;
-    let historyLock = false;
+    let pendingHistoryPage = null;
 
     const nextKeys = new Set(['ArrowRight','ArrowDown',' ','PageDown']);
     const previousKeys = new Set(['ArrowLeft','ArrowUp','PageUp']);
@@ -155,13 +155,22 @@
     }
 
     function slideUrl(page) {
-      const separator = SLIDE_FILES[page - 1].includes('?') ? '&' : '?';
-      return `${SLIDE_FILES[page - 1]}${separator}embedded=1&deck=1`;
+      return `${SLIDE_FILES[page - 1]}?embedded=1&deck=1`;
     }
 
     function isInteractiveTarget(target) {
-      if (!(target instanceof Element)) return false;
-      return Boolean(target.closest('input,textarea,select,button,a,[contenteditable="true"],[role="textbox"],[role="slider"]'));
+      return Boolean(target && target.nodeType === 1 && typeof target.closest === 'function' && target.closest('input,textarea,select,button,a,[contenteditable="true"],[role="textbox"],[role="slider"]'));
+    }
+
+    function createBlankFrame() {
+      const frame = document.createElement('iframe');
+      frame.className = 'slide-frame';
+      frame.title = 'Slide Academate';
+      frame.setAttribute('allow', 'fullscreen; autoplay');
+      frame.setAttribute('allowfullscreen', '');
+      frame.setAttribute('aria-hidden', 'true');
+      stage.insertBefore(frame, loader);
+      return frame;
     }
 
     function setBusy(busy) {
@@ -200,7 +209,6 @@
     }
 
     function writeHistory(page, mode = 'push') {
-      if (historyLock) return;
       const url = `${window.location.pathname}${window.location.search}#slide-${page}`;
       const state = {page};
       try {
@@ -256,8 +264,15 @@
         childDocument.documentElement.dataset.deckBridge = '1';
         childDocument.addEventListener('keydown', event => handleDeckKey(event, true), true);
       } catch (_) {
-        // The postMessage fallback below still works if same-origin access is unavailable.
+        // postMessage dari slide tetap menjadi fallback bila akses same-origin tidak tersedia.
       }
+    }
+
+    function processPendingHistory() {
+      if (pendingHistoryPage === null || transitionInProgress) return;
+      const target = pendingHistoryPage;
+      pendingHistoryPage = null;
+      if (target !== currentPage) window.setTimeout(() => navigateTo(target, {history:false}), 0);
     }
 
     function finalizeFrameSwap(targetPage, token, historyMode) {
@@ -272,13 +287,9 @@
 
       window.setTimeout(() => {
         if (token !== transitionToken) return;
-        outgoing.classList.remove('is-leaving');
-        outgoing.removeAttribute('src');
-        outgoing.src = 'about:blank';
-        outgoing.removeAttribute('data-page');
-
+        outgoing.remove();
         activeFrame = incoming;
-        standbyFrame = outgoing;
+        standbyFrame = createBlankFrame();
         currentPage = targetPage;
         requestedPage = targetPage;
         setBusy(false);
@@ -286,6 +297,7 @@
         updateControls();
         if (historyMode) writeHistory(currentPage, historyMode);
         prefetchNeighbors(currentPage);
+        processPendingHistory();
       }, TRANSITION_MS + 24);
     }
 
@@ -311,7 +323,9 @@
       standbyFrame.addEventListener('load', onLoad, {once:true});
       standbyFrame.src = slideUrl(targetPage);
       loadTimer = window.setTimeout(() => {
-        if (token === transitionToken) showError();
+        if (token !== transitionToken) return;
+        ++transitionToken;
+        showError();
       }, LOAD_TIMEOUT_MS);
     }
 
@@ -348,6 +362,15 @@
       fullscreenIcon.className = active ? 'ri-fullscreen-exit-line' : 'ri-fullscreen-line';
     }
 
+    function handleHistoryTarget(page) {
+      const target = clampPage(page);
+      if (transitionInProgress) {
+        pendingHistoryPage = target;
+        return;
+      }
+      if (target !== currentPage) navigateTo(target, {history:false});
+    }
+
     function loadInitialPage() {
       const initialPage = pageFromLocation();
       currentPage = initialPage;
@@ -367,10 +390,13 @@
         updateControls();
         writeHistory(initialPage, 'replace');
         prefetchNeighbors(initialPage);
+        processPendingHistory();
       }, {once:true});
       activeFrame.src = slideUrl(initialPage);
       loadTimer = window.setTimeout(() => {
-        if (token === transitionToken) showError();
+        if (token !== transitionToken) return;
+        ++transitionToken;
+        showError();
       }, LOAD_TIMEOUT_MS);
     }
 
@@ -378,22 +404,27 @@
     nextButton.addEventListener('click', () => navigateRelative(1));
     fullscreenButton.addEventListener('click', toggleFullscreen);
     retryButton.addEventListener('click', () => {
-      if (transitionInProgress) {
-        ++transitionToken;
-        setBusy(false);
-      }
+      ++transitionToken;
+      window.clearTimeout(loadTimer);
       hideError();
+      setBusy(false);
+
       if (requestedPage === currentPage) {
         const page = currentPage;
-        activeFrame.classList.remove('is-active');
+        activeFrame.remove();
+        activeFrame = createBlankFrame();
         activeFrame.addEventListener('load', () => {
           installChildBridge(activeFrame, page);
           activeFrame.classList.add('is-active');
+          activeFrame.setAttribute('aria-hidden','false');
           hideLoader();
+          updateControls();
         }, {once:true});
         showLoader();
         activeFrame.src = slideUrl(page);
       } else {
+        standbyFrame.remove();
+        standbyFrame = createBlankFrame();
         navigateTo(requestedPage, {history:false});
       }
     });
@@ -418,18 +449,11 @@
     });
 
     window.addEventListener('popstate', event => {
-      const target = event.state && event.state.page ? clampPage(event.state.page) : pageFromLocation();
-      if (target === currentPage || transitionInProgress) return;
-      historyLock = true;
-      navigateTo(target, {history:false});
-      window.setTimeout(() => {historyLock = false}, TRANSITION_MS + 80);
+      const target = event.state && event.state.page ? event.state.page : pageFromLocation();
+      handleHistoryTarget(target);
     });
 
-    window.addEventListener('hashchange', () => {
-      if (historyLock || transitionInProgress) return;
-      const target = pageFromLocation();
-      if (target !== currentPage) navigateTo(target, {history:false});
-    });
+    window.addEventListener('hashchange', () => handleHistoryTarget(pageFromLocation()));
 
     window.addEventListener('pageshow', () => {
       updateControls();
